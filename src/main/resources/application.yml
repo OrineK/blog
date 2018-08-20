@@ -10,10 +10,10 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
-# Redis数据库索引（默认为0）
+# Redis
   redis:
-    database: 0
-    timeout: 0
+    database: 1
+    timeout: 5000
     host: 127.0.0.1
     port: 6379
     password:
@@ -22,6 +22,3 @@ spring:
       max-wait: -1
       max-idle: 8
       min-idle: 0
-    cluster:
-      max-redirects: 10
-      nodes: 127.0.0.1:6080

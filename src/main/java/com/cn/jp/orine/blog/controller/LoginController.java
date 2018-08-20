@@ -6,14 +6,14 @@ import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.DisabledAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-@Controller
+@RestController
 @RequestMapping(value = "/auth")
 public class LoginController {
 
@@ -26,9 +26,11 @@ public class LoginController {
             User user = (User) subject.getPrincipal();
         } catch (DisabledAccountException e) {
             request.setAttribute("msg", "账户已被禁用");
+            System.out.println("账户已被禁用");
             return "login";
         } catch (AuthenticationException e) {
             request.setAttribute("msg", "用户名或密码错误");
+            System.out.println("用户名或密码错误");
             return "login";
         }
 

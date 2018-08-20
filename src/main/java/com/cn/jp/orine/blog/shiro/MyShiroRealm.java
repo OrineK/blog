@@ -45,9 +45,10 @@ public class MyShiroRealm extends AuthorizingRealm {
     }
 
     @Override
-    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
+    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authToken) throws AuthenticationException {
         logger.info("---------------- 执行 Shiro 凭证认证 ----------------------");
-        String name = (String) token.getPrincipal();
+        UsernamePasswordToken token = (UsernamePasswordToken) authToken;
+        String name = token.getUsername();
         // 从数据库获取对应用户名密码的用户
         User user = userService.findByUsername(name);
         if (user != null) {
