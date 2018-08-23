@@ -12,11 +12,13 @@ import org.crazycake.shiro.RedisSessionDAO;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.Filter;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+@Component
 @Configuration
 public class ShiroConfig {
 
@@ -29,7 +31,7 @@ public class ShiroConfig {
         // 登录成功后要跳转的链接
         shiroFilterFactoryBean.setSuccessUrl("/auth/index");
         // 未授权界面; ----这个配置了没卵用，具体原因想深入了解的可以自行百度
-        //shiroFilterFactoryBean.setUnauthorizedUrl("/auth/403");
+        shiroFilterFactoryBean.setUnauthorizedUrl("/auth/403");
         //自定义拦截器
         Map<String, Filter> filtersMap = new LinkedHashMap<String, Filter>();
         //限制同一帐号同时在线的个数。
@@ -40,10 +42,12 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/css/**", "anon");
         filterChainDefinitionMap.put("/js/**", "anon");
         filterChainDefinitionMap.put("/img/**", "anon");
+        filterChainDefinitionMap.put("/layui/**", "anon");
         filterChainDefinitionMap.put("/auth/login", "anon");
         filterChainDefinitionMap.put("/auth/logout", "logout");
         filterChainDefinitionMap.put("/auth/kickout", "anon");
         filterChainDefinitionMap.put("/**", "authc,kickout");
+        System.out.println("filterChainDefinitionMap:"+filterChainDefinitionMap);
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         return shiroFilterFactoryBean;
     }

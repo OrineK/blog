@@ -6,7 +6,9 @@ import com.cn.jp.orine.blog.dao.UserDao;
 import com.cn.jp.orine.blog.model.Permission;
 import com.cn.jp.orine.blog.model.Role;
 import com.cn.jp.orine.blog.model.User;
+import com.cn.jp.orine.blog.utils.RandomUtil;
 import org.apache.shiro.crypto.hash.SimpleHash;
+import org.apache.shiro.util.ByteSource;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -59,10 +61,10 @@ public class InitAdmin {//初始化admin的一些数据
     public void addUser() {
         User user = new User();
         user.setUsername("admin");
-        user.setSalt("123");
         String hashAlgorithmName = "MD5";
+        String salt = RandomUtil.generateMixString(10);//以账号作为盐值
+        user.setSalt(salt);
         Object crdentials = "123456";//密码原值
-        Object salt = user.getSalt();//盐值
         int hashIterations = 1024;//加密1024次
         Object result = new SimpleHash(hashAlgorithmName,crdentials,salt,hashIterations);
         user.setPassword(result.toString());

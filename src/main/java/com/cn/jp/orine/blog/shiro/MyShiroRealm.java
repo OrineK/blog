@@ -34,7 +34,7 @@ public class MyShiroRealm extends AuthorizingRealm {
             User userLogin = (User) principal;
             Set<String> roles = roleService.findRoleNameByUserId(userLogin.getId());
             authorizationInfo.addRoles(roles);
-
+            System.out.println(userLogin.getUsername());
             Set<String> permissions = userService.findPermissionsByUserId(userLogin.getId());
             authorizationInfo.addStringPermissions(permissions);
         }
@@ -49,13 +49,15 @@ public class MyShiroRealm extends AuthorizingRealm {
         logger.info("---------------- 执行 Shiro 凭证认证 ----------------------");
         UsernamePasswordToken token = (UsernamePasswordToken) authToken;
         String name = token.getUsername();
+        String password = String.valueOf(token.getPassword());
         // 从数据库获取对应用户名密码的用户
         User user = userService.findByUsername(name);
         if (user != null) {
             logger.info("---------------- Shiro 凭证认证成功 ----------------------");
             SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(
                     user, //用户
-                    ByteSource.Util.bytes(user.getCredentialsSalt()), //密码
+                    password, //密码
+                    ByteSource.Util.bytes(user.getSalt()),
                     getName()  //realm name
             );
             return authenticationInfo;

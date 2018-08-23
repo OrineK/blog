@@ -2,6 +2,7 @@ package com.cn.jp.orine.blog.shiro;
 
 import com.alibaba.fastjson.JSON;
 import com.cn.jp.orine.blog.model.User;
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.shiro.cache.Cache;
 import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.session.Session;
@@ -63,7 +64,6 @@ public class KickoutSessionControlFilter extends AccessControlFilter {
             //如果没有登录，直接进行之后的流程
             return true;
         }
-
 
         Session session = subject.getSession();
         User user = (User) subject.getPrincipal();

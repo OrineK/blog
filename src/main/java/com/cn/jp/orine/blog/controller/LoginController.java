@@ -1,41 +1,43 @@
 package com.cn.jp.orine.blog.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.cn.jp.orine.blog.Exception.BusinessException;
+import com.cn.jp.orine.blog.constant.ResultMsg;
+import com.cn.jp.orine.blog.constant.SysContant;
 import com.cn.jp.orine.blog.model.User;
+import com.cn.jp.orine.blog.utils.JsonUtil;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.DisabledAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-@RestController
+@Controller
 @RequestMapping(value = "/auth")
 public class LoginController {
 
+    @ResponseBody
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String submitLogin(String username, String password, HttpServletRequest request) {
+    public JSON submitLogin(String username, String password, HttpSession session) {
         try {
             UsernamePasswordToken token = new UsernamePasswordToken(username, password);
             Subject subject = SecurityUtils.getSubject();
             subject.login(token);
             User user = (User) subject.getPrincipal();
+            session.setAttribute(SysContant.USER_SESSION, user);
         } catch (DisabledAccountException e) {
-            request.setAttribute("msg", "账户已被禁用");
-            System.out.println("账户已被禁用");
-            return "login";
+            throw new BusinessException(ResultMsg.USER_IS_BANNED);
         } catch (AuthenticationException e) {
-            request.setAttribute("msg", "用户名或密码错误");
-            System.out.println("用户名或密码错误");
-            return "login";
+            throw new BusinessException(ResultMsg.USERNAME_PASSWORD_ERROR);
         }
-
         // 执行到这里说明用户已登录成功
-        return "redirect:/auth/index";
+        return JsonUtil.newJson().toJson();
     }
 
 
@@ -43,20 +45,6 @@ public class LoginController {
     public String loginPage() {
         return "login";
     }
-
-//    @RequestMapping(value = "/index", method = RequestMethod.GET)
-//    public String loginSuccessMessage(HttpServletRequest request, HttpSession session) {
-//        String username = "未登录";
-//        User currentLoginUser = RequestUtils.currentLoginUser();
-//
-//        if (currentLoginUser != null && StringUtils.isNotEmpty(currentLoginUser.getUsername())) {
-//            username = currentLoginUser.getUsername();
-//        } else {
-//            return "redirect:/auth/login";
-//        }
-//        request.setAttribute("username", username);
-//        return "index";
-//    }
 
     //被踢出后跳转的页面
     @RequestMapping(value = "/kickout", method = RequestMethod.GET)

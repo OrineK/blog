@@ -31,7 +31,7 @@ public class Role implements Serializable {
 
     @Setter
     @Getter
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "RolePermission", joinColumns = {@JoinColumn(name = "roleId", referencedColumnName = "id")},
         inverseJoinColumns = {@JoinColumn(name = "permissionId", referencedColumnName = "id", unique = true)})
     private List<Permission> permissions;
