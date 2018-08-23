@@ -25,8 +25,8 @@ spring:
   mvc:
     view:
       prefix:
-      suffix: .ftl
+      suffix: .html
   freemarker:
     charset: utf-8
-    suffix: .ftl
+    suffix: .html
     enabled: true

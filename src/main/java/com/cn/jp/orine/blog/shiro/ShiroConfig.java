@@ -12,13 +12,11 @@ import org.crazycake.shiro.RedisSessionDAO;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.stereotype.Component;
 
 import javax.servlet.Filter;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-@Component
 @Configuration
 public class ShiroConfig {
 
@@ -47,7 +45,6 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/auth/logout", "logout");
         filterChainDefinitionMap.put("/auth/kickout", "anon");
         filterChainDefinitionMap.put("/**", "authc,kickout");
-        System.out.println("filterChainDefinitionMap:"+filterChainDefinitionMap);
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         return shiroFilterFactoryBean;
     }
