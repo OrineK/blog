@@ -37,9 +37,8 @@ public class LoginController {
             throw new BusinessException(ResultMsg.USERNAME_PASSWORD_ERROR);
         }
         // 执行到这里说明用户已登录成功
-        return JsonUtil.newJson().toJson();
+        return JsonUtil.newJson().addMessage(ResultMsg.USER_LOGIN_SUCCESS).toJson();
     }
-
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String loginPage() {
@@ -51,5 +50,8 @@ public class LoginController {
     public String kickOut() {
         return "kickout";
     }
+
+    @RequestMapping(value = "/403", method = RequestMethod.GET)
+    public String html403() { return "403"; }
 
 }

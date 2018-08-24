@@ -10,6 +10,7 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+    open-in-view: true
 # Redis
   redis:
     database: 1
@@ -30,3 +31,4 @@ spring:
     charset: utf-8
     suffix: .html
     enabled: true
+    prefix:

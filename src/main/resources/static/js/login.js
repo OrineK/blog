@@ -17,9 +17,7 @@ layui.use('form', function(){
         $.post("/auth/login",data.field,function(res){
             if(res.code == 200){
                 layer.msg(res.message, {time: 2000});
-                //var url = "{:U('student/student_lists')}"; //
-                layer.msg("登录成功");
-                // setTimeout(window.location.href=url,2000);
+                setTimeout(window.location.href="/admin/index",2000);
             }else{
                 layer.msg(res.message, {time: 2000});
             }

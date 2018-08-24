@@ -28,6 +28,11 @@ public class ResultMsg {
     public static final String SYSTEM_FAIL = "系统异常";
 
     /**
+     * 参数错误
+     */
+    public static final String PARAMETER_ERROR = "参数错误";
+
+    /**
      * 登录过期
      */
     public static final String SESSION_USER_OVERDUE = "用户登录已过期";
@@ -39,5 +44,9 @@ public class ResultMsg {
      * 用户被禁止
      */
     public static final String USER_IS_BANNED = "用户被禁止";
+    /**
+     * 登录成功
+     */
+    public static final String USER_LOGIN_SUCCESS = "登录成功";
 
 }
