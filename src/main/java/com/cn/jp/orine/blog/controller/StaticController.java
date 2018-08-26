@@ -20,10 +20,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.text.DateFormat;
+import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -47,6 +44,31 @@ public class StaticController {
 	private String resPicUrl = "/data/blog/pic/";
 
 	private static final String UPLOAD_PATH = "/upload/img/";
+
+	/**
+	 * 上传图片 适应于laiyu的
+	 * @param file
+	 * @param dirname
+	 * @return
+	 */
+	@RequestMapping(value = "/uploadImg", method = RequestMethod.POST)
+	public String uploadImg(@RequestParam(value = "file") MultipartFile file, String dirname,
+							HttpServletResponse response) throws IOException {
+		logger.debug("上传图片");
+		System.out.println(dirname);
+		System.out.println(file.getName());
+		PrintWriter out = null;
+		if (file.isEmpty()) {
+			throw new BusinessException("未检测到图片内容");
+		}
+		String resPath = uploadPic((CommonsMultipartFile) file, dirname);
+		out = response.getWriter();
+		out.print(JsonUtil.newJson().addData("data", resPath).toJson());
+		out.flush();
+		out.close();
+		return resPath;
+	}
+
 
 	/**
 	 * 图片上传
@@ -165,64 +187,6 @@ public class StaticController {
 	public String responseUrl(String nid, String fileName, String prefix) {
 		String url = "/" + nid + "/" + fileName + "-" + prefix + "/view.html";
 		return url;
-	}
-
-	@RequestMapping("/uploadImg")
-	public void uplodaImg(@RequestParam("upload") MultipartFile file, HttpServletRequest request,
-						  HttpServletResponse response, @RequestParam("CKEditorFuncNum") String CKEditorFuncNum)
-			throws IllegalStateException, IOException {
-		PrintWriter out = response.getWriter();
-		String fileName = file.getOriginalFilename();
-		String uploadContentType = file.getContentType();
-		String expandedName = "";
-		if (uploadContentType.equals("image/pjpeg") || uploadContentType.equals("image/jpeg")) {
-			// IE6上传jpg图片的headimageContentType是image/pjpeg，而IE9以及火狐上传的jpg图片是image/jpeg
-			expandedName = ".jpg";
-		} else if (uploadContentType.equals("image/png") || uploadContentType.equals("image/x-png")) {
-			// IE6上传的png图片的headimageContentType是"image/x-png"
-			expandedName = ".png";
-		} else if (uploadContentType.equals("image/gif")) {
-			expandedName = ".gif";
-		} else if (uploadContentType.equals("image/bmp")) {
-			expandedName = ".bmp";
-		} else {
-			out.println("<script type=\"text/javascript\">");
-			out.println("window.parent.CKEDITOR.tools.callFunction(" + CKEditorFuncNum + ",'',"
-					+ "'文件格式不正确（必须为.jpg/.gif/.bmp/.png文件）');");
-			out.println("</script>");
-			return;
-		}
-		if (file.getSize() > 600 * 1024) {
-			out.println("<script type=\"text/javascript\">");
-			out.println("window.parent.CKEDITOR.tools.callFunction(" + CKEditorFuncNum + ",''," + "'文件大小不得大于600k');");
-			out.println("</script>");
-			return;
-		}
-		DateFormat df = new SimpleDateFormat("yyyyMMddhhmmss");
-		fileName = df.format(new Date()) + expandedName;
-		/** 构建上传图片的保存目录* */
-		String saveDir = UPLOAD_PATH + fileName; // 相当于("/upload/img/"+fileName)
-		/** 得到文件保存目录的真实路径* */
-		/**
-		 * 一定要注意这里，这里的路径就是上传图片所在的项目根路径，在编译后的文件夹里面，前端可以根据wepapp下的路径直接取即可。
-		 * 不确定的话，就打印出这句话，然后看看下面的配置的前端是怎么取到的
-		 */
-		String imgRealPathDir = request.getSession().getServletContext().getRealPath(saveDir);
-
-		File targetFile = new File(imgRealPathDir);
-		if (!targetFile.exists()) {
-			targetFile.mkdirs();
-		}
-
-		file.transferTo(targetFile);// 注意，项目经常会在这里出现错误，错误的原因一般都是配的上传路径或者前端获取的路径不对，一定要注意这里
-
-		// 返回"图像"选项卡并显示图片 request.getContextPath()为web项目名,只适合jsp页面使用，不适用于后台Java代码
-		out.println("<script type=\"text/javascript\">");
-		out.println("window.parent.CKEDITOR.tools.callFunction(" + CKEditorFuncNum + ",'" + request.getContextPath()
-				+ "/upload/img/" + fileName + "','')");
-		out.println("</script>");
-
-		return;
 	}
 
 }

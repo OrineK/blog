@@ -24,22 +24,17 @@
                     <input type="text" name="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
                 </div>
             </div>
-            <input type="hidden" name="coverImg" id="coverImg" value="">
-
-        </form>
-        <div class="layui-form-item">
-            <div class="layui-upload">
-                <button type="button" class="layui-btn" id="upload">上传封面图</button>
-                <form id="video_upload" method="POST" style="top: -30px; position: relative; opacity: 1;">
-                    <input type="hidden" name="nid" value="cover_img"/>
-                    <input id="pfile_upload" name="file" onchange="dopic_upload()" class="weui-uploader__input" type="file" accept="image/*" multiple="">
-                </form>
-                <div class="layui-upload-list">
-                    <img class="layui-upload-img" id="cover_img">
-                    <p id="demoText"></p>
+            <div class="layui-form-item">
+                <div class="layui-upload">
+                    <button type="button" class="layui-btn" id="upload">上传封面图</button>
+                    <div class="layui-upload-list">
+                        <input type="hidden" name="coverImg" id="coverImg" value="">
+                        <img class="layui-upload-img" id="cover_img">
+                        <p id="demoText"></p>
+                    </div>
                 </div>
             </div>
-        </div>
+        </form>
     </div>
 </div>
 <#include "/admin/common/footer.ftl">
@@ -51,24 +46,37 @@
             ,upload = layui.upload
             ,$ = layui.$;
 
+        var uploadInst = upload.render({
+            elem: '#upload'
+            ,url: '/uploadImg'
+            ,acceptMime: 'image/*'
+            ,accept: 'images'
+            ,method: 'POST'
+            ,data: {'dirname':'coverImg',"enctype":"multipart/form-data"}
+            ,before: function(obj){
+                //预读本地文件示例，不支持ie8
+                obj.preview(function(index, file, result){
+                    $('#cover_img').attr('src', result); //图片链接（base64）
+                });
+            }
+            ,done: function(res){
+                console.log(res)
+                //如果上传失败
+                if(res.code > 0){
+                    return layer.msg('上传失败');
+                }
+                //上传成功
+            }
+            ,error: function(){
+                //演示失败状态，并实现重传
+                var demoText = $('#demoText');
+                demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
+                demoText.find('.demo-reload').on('click', function(){
+                    uploadInst.upload();
+                });
+            }
+        });
 
     })
 
-    function dopic_upload() {
-        var form = $("#pic_upload")
-        var data = new FormData(form[0]);
-        $.ajax({
-            url: "/img/uploadifySave",
-            type: 'POST',
-            data: data,
-            dataType: 'JSON',
-            cache: false,
-            processData: false,
-            contentType: false
-        }).done(function(res){
-            console.log(res);
-            $("#cover_img").attr("src", res.data[0]);
-            $("#coverImg").val(res.data[0]);
-        });
-    };
 </script>
