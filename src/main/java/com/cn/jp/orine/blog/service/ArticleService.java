@@ -10,11 +10,22 @@ import com.cn.jp.orine.blog.model.Category;
 import com.cn.jp.orine.blog.model.Tag;
 import com.cn.jp.orine.blog.utils.BeanUitl;
 import com.cn.jp.orine.blog.utils.DateUtil;
+import com.cn.jp.orine.blog.utils.StringUtil;
 import com.cn.jp.orine.blog.vo.ArticleAddReq;
 import com.cn.jp.orine.blog.vo.ArticleEditReq;
+import com.cn.jp.orine.blog.vo.ArticleQueryReq;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -89,5 +100,32 @@ public class ArticleService {
 
     public Article getOneById(Long id) {
         return articleDao.getOne(id);
+    }
+
+    public Page<Article> findList(ArticleQueryReq req) {
+        Sort sort = new Sort(Sort.Direction.DESC, "id");
+        Pageable pageable = PageRequest.of(req.getCurrentPage(), req.getPageSize(), sort);
+        return articleDao.findAll(this.getWhereClause(req), pageable);
+    }
+
+
+    /**
+     * 私有方法 -用于查询
+     *
+     * @param req
+     * @return
+     */
+    private Specification<Article> getWhereClause(ArticleQueryReq req) {
+        return new Specification<Article>() {
+            @Override
+            public Predicate toPredicate(Root<Article> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+                List<Predicate> predicates = new ArrayList<>();
+                if (!StringUtil.isObjEmpty(req.getTitle())) {
+                    predicates.add(cb.like(root.get("title").as(String.class), "%" + req.getTitle() + "%"));
+                }
+                Predicate[] pre = new Predicate[predicates.size()];
+                return query.where(predicates.toArray(pre)).getRestriction();
+            }
+        };
     }
 }

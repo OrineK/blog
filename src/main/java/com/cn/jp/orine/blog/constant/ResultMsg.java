@@ -49,4 +49,8 @@ public class ResultMsg {
      */
     public static final String USER_LOGIN_SUCCESS = "登录成功";
 
+    /**
+     *
+     */
+    public static final String UPLOAD_PIC_SIZE_ERROR = "图片尺寸过大";
 }

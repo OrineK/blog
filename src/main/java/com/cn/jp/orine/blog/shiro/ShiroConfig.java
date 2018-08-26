@@ -36,6 +36,8 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/img/**", "anon");
         filterChainDefinitionMap.put("/layui/**", "anon");
         filterChainDefinitionMap.put("/", "anon");
+        filterChainDefinitionMap.put("/img/uploadifySave", "anon");
+        filterChainDefinitionMap.put("/uploadImg", "anon");
         filterChainDefinitionMap.put("/auth/login", "anon");
         filterChainDefinitionMap.put("/auth/logout", "logout");
         filterChainDefinitionMap.put("/auth/kickout", "anon");
