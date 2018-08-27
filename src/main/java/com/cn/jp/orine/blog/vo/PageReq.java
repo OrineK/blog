@@ -29,6 +29,7 @@ public class PageReq {
 	}
 
 	public void setCurrentPage(int currentPage) {
+		currentPage --;
 		this.currentPage = currentPage > -1 ? currentPage : 0;
 	}
 }

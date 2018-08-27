@@ -1,6 +1,7 @@
 package com.cn.jp.orine.blog.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.cn.jp.orine.blog.constant.SysContant;
 import com.cn.jp.orine.blog.model.Article;
 import com.cn.jp.orine.blog.model.Category;
@@ -14,6 +15,7 @@ import com.cn.jp.orine.blog.vo.ArticleQueryReq;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -103,6 +105,8 @@ public class AdminController {
     @RequestMapping(value = "/articleListJson", method = RequestMethod.GET)
     @ResponseBody
     public JSON findArtList(ArticleQueryReq req, HttpSession session) {
-        return JsonUtil.newJson().addData("data", articleService.findList(req)).toJson();
+        Page<Article> articlePage = articleService.findList(req);
+        return JsonUtil.newJson().addData("count", articlePage.getTotalElements())
+                .addData("data", articlePage.getContent()).toJson();
     }
 }

@@ -4,12 +4,12 @@
 
 <div class="layui-body">
     <div style="padding: 15px;">
-        <form class="layui-form layui-form-pane" action="">
+        <form class="layui-form layui-form-pane">
+            <input type="hidden" id="Author" name="Author" value="jp.orine">
             <div class="layui-form-item">
                 <label class="layui-form-label">分类</label>
                 <div class="layui-input-inline">
-                    <select name="interest" lay-filter="category">
-                        <option value="" selected=""></option>
+                    <select name="categoryId" lay-filter="categoryId" id="categoryId">
                         <#if categories?has_content>
                             <#list categories as cate>
                                 <option value="${cate.id}">${cate.name}</option>
@@ -21,18 +21,39 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">标题</label>
                 <div class="layui-input-block" style="width: 60%">
-                    <input type="text" name="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
+                    <input type="text" name="title" id="title" lay-verify="required" autocomplete="off" placeholder="请输入标题" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">摘要</label>
+                <div class="layui-input-block">
+                    <textarea placeholder="请输入摘要" lay-verify="required" id="summary" name="summary" class="layui-textarea"></textarea>
+                </div>
+            </div>
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">内容</label>
+                <div class="layui-input-block">
+                    <textarea placeholder="请输入内容" lay-verify="content" class="layui-textarea" name="content" id="content" style="display: none"></textarea>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">标签</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="tagNames" name="tagNames" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
                 <div class="layui-upload">
                     <button type="button" class="layui-btn" id="upload">上传封面图</button>
                     <div class="layui-upload-list">
-                        <input type="hidden" name="coverImg" id="coverImg" value="">
+                        <input type="hidden" lay-verify="required" name="coverImg" id="coverImg" value="">
                         <img class="layui-upload-img" id="cover_img">
                         <p id="demoText"></p>
                     </div>
                 </div>
+            </div>
+            <div class="layui-form-item" style="text-align: center">
+                <button class="layui-btn" lay-submit="" lay-filter="go">提交发布</button>
             </div>
         </form>
     </div>
@@ -44,7 +65,14 @@
         var form = layui.form
             ,layer = layui.layer
             ,upload = layui.upload
-            ,$ = layui.$;
+            ,layedit = layui.layedit;
+
+        layedit.set({
+            uploadImage: {
+                url: '/uploadImg' //接口url
+            }
+        })
+        var index = layedit.build('content');
 
         var uploadInst = upload.render({
             elem: '#upload'
@@ -78,6 +106,26 @@
             }
         });
 
+        form.verify({
+            content: function(value) {
+                return layedit.sync(index);
+            }
+        });
+
+        //监听提交
+        form.on('submit(go)', function(data){
+            // layedit.sync(editIndex);
+            $.post("/admin/addArticle",data.field,function(res){
+                if(res.code == 200){
+                    layer.alert(res.message, function () {
+                        setTimeout(window.location.href="/admin/articleList",2000);
+                    });
+                }else{
+                    layer.alert(res.message, {time: 2000});
+                }
+            },'json');
+            return false;
+        });
     })
 
 </script>

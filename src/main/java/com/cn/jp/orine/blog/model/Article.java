@@ -43,7 +43,7 @@ public class Article implements Serializable {
 
     @Setter
     @Getter
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "categoryId")
     private Category category;
 
