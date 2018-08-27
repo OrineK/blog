@@ -146,10 +146,8 @@ public class StaticController {
 			fileName = NidGenerator.getSerialNumber();
 			File files = new File(filePath);
 			if (!files.exists()) {
-				System.out.println(1);
 				files.mkdirs();
 			}
-			System.out.println(2);
 			File orignFile = new File(filePath + "/" + fileName + "." + prefix);
 			FileUtil.copyFile(newfile, orignFile);
 

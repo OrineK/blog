@@ -96,9 +96,13 @@ public class AdminController {
         User user = (User) session.getAttribute(SysContant.USER_SESSION);
         mav.addObject(user);
         mav.addObject("sidebar", "article_list");
-        mav.addObject(articleService.findList(req));
         mav.setViewName("admin/article_list");
         return mav;
     }
 
+    @RequestMapping(value = "/articleListJson", method = RequestMethod.GET)
+    @ResponseBody
+    public JSON findArtList(ArticleQueryReq req, HttpSession session) {
+        return JsonUtil.newJson().addData("data", articleService.findList(req)).toJson();
+    }
 }
