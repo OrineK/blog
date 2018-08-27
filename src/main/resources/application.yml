@@ -32,7 +32,4 @@ spring:
     suffix: .ftl
     enabled: true
     prefix:
-  http:
-    multipart:
-      enabled: true
 

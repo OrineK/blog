@@ -1,11 +1,13 @@
 package com.cn.jp.orine.blog.controller;
 
 
+import com.alibaba.fastjson.JSON;
 import com.cn.jp.orine.blog.Exception.BusinessException;
 import com.cn.jp.orine.blog.constant.ResultMsg;
 import com.cn.jp.orine.blog.utils.*;
 import com.cn.jp.orine.blog.vo.UploadFile;
 import org.apache.commons.fileupload.disk.DiskFileItem;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.util.FileUtil;
 import org.slf4j.Logger;
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
@@ -26,7 +29,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@Controller
+@RestController
 @Scope("prototype")
 public class StaticController {
 	private static final Logger logger = LoggerFactory.getLogger(StaticController.class);
@@ -52,21 +55,14 @@ public class StaticController {
 	 * @return
 	 */
 	@RequestMapping(value = "/uploadImg", method = RequestMethod.POST)
-	public String uploadImg(@RequestParam(value = "file") MultipartFile file, String dirname,
-							HttpServletResponse response) throws IOException {
+	public JSON uploadImg(@RequestParam(value = "file") MultipartFile file, String dirname,
+						  HttpServletResponse response) throws IOException {
 		logger.debug("上传图片");
-		System.out.println(dirname);
-		System.out.println(file.getName());
-		PrintWriter out = null;
 		if (file.isEmpty()) {
 			throw new BusinessException("未检测到图片内容");
 		}
-		String resPath = uploadPic((CommonsMultipartFile) file, dirname);
-		out = response.getWriter();
-		out.print(JsonUtil.newJson().addData("data", resPath).toJson());
-		out.flush();
-		out.close();
-		return resPath;
+		String resPath = uploadPic(file, dirname);
+		return JsonUtil.newJson().addData("data", resPath).toJson();
 	}
 
 
@@ -97,6 +93,78 @@ public class StaticController {
 		out.flush();
 		out.close();
 		return resPaths;
+	}
+
+	/**
+	 * 删除
+	 *
+	 * @param files
+	 */
+	private void deleteFile(File... files) {
+		for (File file : files) {
+			if (file.exists()) {
+				file.delete();
+			}
+		}
+	}
+
+	/**
+	 * 处理图片
+	 * @param multipartFile
+	 * @param nid
+	 * @return
+	 */
+	private String uploadPic(MultipartFile multipartFile, String nid) throws IOException {
+		String picName = multipartFile.getOriginalFilename();
+		String prefix = "";
+		String fileName = "";
+		String resPath = "";
+		// 获取文件后缀
+		String suffix = picName.substring(picName.lastIndexOf("."));
+		File newfile = File.createTempFile(NidGenerator.getSerialNumber(), suffix);
+		try {
+
+			multipartFile.transferTo(newfile);
+			// 取文件后缀名
+			prefix = getFileExt(picName);
+			// 取规定的文件格式对应字符码
+			String prefixStr = FileTypeUtil.FILE_TYPE_MAP.get(prefix);
+			// 校验上传文件格式
+			if (!FileTypeUtil.checkFileType(newfile, "") || StringUtils.isBlank(nid)
+					|| StringUtils.isBlank(prefixStr)) {
+				throw new BusinessException("文件格式错误！");
+			}
+			// 校验图片大小
+			double fileSize = BigDecimalUtil.div(newfile.length(), PICSIZE);
+			fileSize = BigDecimalUtil.div(fileSize, PICSIZE, 2);
+			if (BigDecimalUtil.sub(fileSize, 20) > 0) {
+				throw new BusinessException(ResultMsg.UPLOAD_PIC_SIZE_ERROR);
+			}
+			// 保存文件的相对路径
+			String filePath = picUrl + nid + "/" + getFolder();
+			// 试图创建这个file 如果没有该目录则创建
+			fileName = NidGenerator.getSerialNumber();
+			File files = new File(filePath);
+			if (!files.exists()) {
+				System.out.println(1);
+				files.mkdirs();
+			}
+			System.out.println(2);
+			File orignFile = new File(filePath + "/" + fileName + "." + prefix);
+			FileUtil.copyFile(newfile, orignFile);
+
+			File fe = new File(filePath + "/" + fileName + "_big" + "." + prefix);
+			FileUtil.copyFile(newfile, fe);
+			// 把原图生成缩略图
+			ImgUtil.scaleImg(orignFile, "", 200, 200);
+		} catch (Exception e) {
+			logger.error("IO异常", e);
+			throw new BusinessException("文件上传失败！");
+		} finally {
+			resPath = resPicUrl + nid + "/" + getFolder() + "/" + fileName + "." + prefix;
+//			deleteFile(newfile);
+		}
+		return resPath;
 	}
 
 	/**
