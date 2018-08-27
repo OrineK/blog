@@ -1,6 +1,7 @@
 package com.cn.jp.orine.blog.controller;
 
 
+import com.alibaba.druid.support.json.JSONUtils;
 import com.alibaba.fastjson.JSON;
 import com.cn.jp.orine.blog.Exception.BusinessException;
 import com.cn.jp.orine.blog.constant.ResultMsg;
@@ -25,9 +26,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @RestController
 @Scope("prototype")
@@ -44,7 +43,7 @@ public class StaticController {
 
 	//本地测试
 	private String picUrl = "D://workspace//upload";
-	private String resPicUrl = "/data/blog/pic/";
+	private String resPicUrl = "/upload";
 
 	private static final String UPLOAD_PATH = "/upload/img/";
 
@@ -61,8 +60,30 @@ public class StaticController {
 		if (file.isEmpty()) {
 			throw new BusinessException("未检测到图片内容");
 		}
+		dirname = "/"+dirname;
 		String resPath = uploadPic(file, dirname);
 		return JsonUtil.newJson().addData("data", resPath).toJson();
+	}
+
+	/**
+	 * layui edit 上传图片
+	 */
+	@RequestMapping(value = "/uploadArtImg", method = RequestMethod.POST)
+	public String uploadImg(@RequestParam(value = "file") MultipartFile file, HttpServletResponse response) throws IOException {
+		if (file.isEmpty()) {
+			throw new BusinessException("未检测到图片内容");
+		}
+		String dirname = "/articleImg";
+		String resPath = uploadPic(file, dirname);
+		Map<String,Object> map = new HashMap<String,Object>();
+		Map<String,Object> map2 = new HashMap<String,Object>();
+		map2.put("src",resPath);//图片url
+		map2.put("title", "图片");//图片名称，这个会显示在输入框里
+		map.put("code",0);//0表示成功，1失败
+		map.put("msg","上传成功");//提示消息
+		map.put("data",map2);
+		String result = JSONUtils.toJSONString(map);
+		return result;
 	}
 
 
@@ -160,7 +181,7 @@ public class StaticController {
 			throw new BusinessException("文件上传失败！");
 		} finally {
 			resPath = resPicUrl + nid + "/" + getFolder() + "/" + fileName + "." + prefix;
-//			deleteFile(newfile);
+			deleteFile(newfile);
 		}
 		return resPath;
 	}

@@ -69,7 +69,8 @@
 
         layedit.set({
             uploadImage: {
-                url: '/uploadImg' //接口url
+                url: '/uploadArtImg' //接口url
+                ,type: 'post'
             }
         })
         var index = layedit.build('content');
