@@ -68,14 +68,24 @@ public class ArticleService {
         }
     }
 
-    public void updateArticle(ArticleEditReq req) {
+    public void updateArticle(ArticleAddReq req) {
         Article article = articleDao.getOne(req.getId());
         BeanUitl.copyProperties(article, req);
         Category category = categoryDao.findCategoryById(req.getCategoryId());
         article.setCategory(category);
         List<Tag> tags = new ArrayList<>();
-        for (Long id:req.getTagIds()) {
-            tags.add(tagDao.getOne(id));
+        for (String name : req.getTagNames()) {
+            Tag tag = tagDao.findTagByName(name);
+            if (tag == null) {
+                tag = new Tag();
+                tag.setName(name);
+                try {
+                    tagDao.save(tag);
+                }catch (Exception e) {
+                    throw new BusinessException(ResultMsg.SAVE_ERROR);
+                }
+            }
+            tags.add(tag);
         }
         article.setTags(tags);
         article.setUpdateTime(DateUtil.getNow());
@@ -98,8 +108,16 @@ public class ArticleService {
         }
     }
 
-    public Article getOneById(Long id) {
-        return articleDao.getOne(id);
+    public ArticleEditReq getArticleEditInfoById(Long id) {
+        Article article = articleDao.getOne(id);
+        ArticleEditReq req = new ArticleEditReq();
+        BeanUitl.copyProperties(req, article);
+        List<String> tagNames = new ArrayList<>();
+        for (Tag tag : article.getTags()) {
+            tagNames.add(tag.getName());
+        }
+        req.setTagNames(tagNames);
+        return req;
     }
 
     public Page<Article> findList(ArticleQueryReq req) {

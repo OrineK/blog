@@ -43,5 +43,17 @@
                 {fixed: 'right', title: '操作', align:'center', toolbar: '#barDemo'}
             ]]
         });
+
+        table.on('tool(articleList)', function(obj) {
+            var data = obj.data;  //当前行的数据
+            var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+            var tr = obj.tr; //获得当前行 tr 的DOM对象
+
+            if (layEvent == 'detail') {
+                //TODO
+            }else if (layEvent == 'edit') {
+                location.href = '/admin/editArticle/'+data.id
+            }
+        })
     });
 </script>

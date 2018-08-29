@@ -11,6 +11,10 @@ public class ArticleAddReq {
 
     @Setter
     @Getter
+    private Long id;
+
+    @Setter
+    @Getter
     private String title;
 
     @Setter

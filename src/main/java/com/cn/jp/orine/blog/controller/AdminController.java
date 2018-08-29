@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.cn.jp.orine.blog.constant.SysContant;
 import com.cn.jp.orine.blog.model.Article;
 import com.cn.jp.orine.blog.model.Category;
+import com.cn.jp.orine.blog.model.Tag;
 import com.cn.jp.orine.blog.model.User;
 import com.cn.jp.orine.blog.service.ArticleService;
 import com.cn.jp.orine.blog.service.CategoryService;
@@ -68,7 +69,7 @@ public class AdminController {
 
     @RequestMapping(value = "/editArticle", method = RequestMethod.POST)
     @ResponseBody
-    public JSON editArticle(ArticleEditReq req) {
+    public JSON editArticle(ArticleAddReq req) {
         articleService.updateArticle(req);
         return JsonUtil.newJson().toJson();
     }
@@ -80,15 +81,17 @@ public class AdminController {
         return JsonUtil.newJson().toJson();
     }
 
-    @RequestMapping(value = "/articleInfo/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/editArticle/{id}", method = RequestMethod.GET)
     public ModelAndView articleInfo(@PathVariable Long id, HttpSession session) {
-        Article article = articleService.getOneById(id);
+        Article article = articleService.getArticleEditInfoById(id);
         ModelAndView mav = new ModelAndView();
         User user = (User) session.getAttribute(SysContant.USER_SESSION);
+        List<Category> categories = categoryService.list();
+        mav.addObject("categories", categories);
         mav.addObject(user);
         mav.addObject(article);
         mav.addObject("sidebar", "article_list");
-        mav.setViewName("admin/article_info");
+        mav.setViewName("admin/article_edit");
         return mav;
     }
 

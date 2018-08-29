@@ -74,6 +74,4 @@ public class Article implements Serializable {
     @Getter
     private Integer startNum = 0;  //点赞数
 
-
-
 }
