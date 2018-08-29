@@ -6,6 +6,7 @@
     <div style="padding: 15px;">
         <form class="layui-form layui-form-pane">
             <input type="hidden" id="Author" name="Author" value="jp.orine">
+            <input type="hidden" id="id" name="id" value="${article.id}">
             <div class="layui-form-item">
                 <label class="layui-form-label">分类</label>
                 <div class="layui-input-inline">
@@ -39,14 +40,14 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">标签</label>
                 <div class="layui-input-inline">
-                    <input type="text" id="tagNames" name="tagNames" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
+                    <input type="text" id="tagNames" value="${article.tagNames}" name="tagNames" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
                 <div class="layui-upload">
                     <button type="button" class="layui-btn" id="upload">上传封面图</button>
                     <div class="layui-upload-list">
-                        <input type="hidden" lay-verify="required" name="coverImg" id="coverImg" value="">
+                        <input type="hidden" lay-verify="required" name="coverImg" id="coverImg" value="${article.coverImg}">
                         <img class="layui-upload-img" src="${article.coverImg}" id="cover_img">
                         <p id="demoText"></p>
                     </div>
@@ -116,7 +117,7 @@
         //监听提交
         form.on('submit(go)', function(data){
             // layedit.sync(editIndex);
-            $.post("/admin/addArticle",data.field,function(res){
+            $.post("/admin/editArticle",data.field,function(res){
                 if(res.code == 200){
                     layer.alert(res.message, function () {
                         setTimeout(window.location.href="/admin/articleList",2000);

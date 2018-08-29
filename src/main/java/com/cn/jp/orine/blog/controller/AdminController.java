@@ -74,7 +74,7 @@ public class AdminController {
         return JsonUtil.newJson().toJson();
     }
 
-    @RequestMapping(value = "/delArticle/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/delArticle/{id}", method = RequestMethod.POST)
     @ResponseBody
     public JSON delArticle(@PathVariable Long id) {
         articleService.deleteArticle(id);
@@ -83,13 +83,13 @@ public class AdminController {
 
     @RequestMapping(value = "/editArticle/{id}", method = RequestMethod.GET)
     public ModelAndView articleInfo(@PathVariable Long id, HttpSession session) {
-        Article article = articleService.getArticleEditInfoById(id);
+        ArticleEditReq article = articleService.getArticleEditInfoById(id);
         ModelAndView mav = new ModelAndView();
         User user = (User) session.getAttribute(SysContant.USER_SESSION);
         List<Category> categories = categoryService.list();
         mav.addObject("categories", categories);
         mav.addObject(user);
-        mav.addObject(article);
+        mav.addObject("article", article);
         mav.addObject("sidebar", "article_list");
         mav.setViewName("admin/article_edit");
         return mav;

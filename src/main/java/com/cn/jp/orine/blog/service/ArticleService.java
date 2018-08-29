@@ -1,5 +1,6 @@
 package com.cn.jp.orine.blog.service;
 
+import com.alibaba.fastjson.JSON;
 import com.cn.jp.orine.blog.Exception.BusinessException;
 import com.cn.jp.orine.blog.constant.ResultMsg;
 import com.cn.jp.orine.blog.dao.ArticleDao;
@@ -111,12 +112,13 @@ public class ArticleService {
     public ArticleEditReq getArticleEditInfoById(Long id) {
         Article article = articleDao.getOne(id);
         ArticleEditReq req = new ArticleEditReq();
-        BeanUitl.copyProperties(req, article);
+        BeanUitl.copyProperties(article, req);
         List<String> tagNames = new ArrayList<>();
         for (Tag tag : article.getTags()) {
             tagNames.add(tag.getName());
         }
-        req.setTagNames(tagNames);
+        String tagStr = tagNames.toString();
+        req.setTagNames(tagStr.substring(1, tagStr.length() - 1));
         return req;
     }
 

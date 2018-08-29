@@ -53,6 +53,20 @@
                 //TODO
             }else if (layEvent == 'edit') {
                 location.href = '/admin/editArticle/'+data.id
+            }else if (layEvent == 'del') {
+                layer.confirm('确认删除此文章？'
+                    , { btn: [ '确定', '取消' ] }
+                    ,function(index){
+                    $.post("/admin/delArticle/"+data.id,function(res){
+                        if(res.code == 200){
+                            layer.alert("删除成功", function () {
+                                location.reload()
+                            });
+                        }else{
+                            layer.msg(res.message, {time: 2000});
+                        }
+                    },'json');
+                });
             }
         })
     });
