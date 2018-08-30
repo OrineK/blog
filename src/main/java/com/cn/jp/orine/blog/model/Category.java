@@ -14,13 +14,9 @@ public class Category implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @Setter
-    @Getter
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Setter
-    @Getter
     private String name;
 
 }

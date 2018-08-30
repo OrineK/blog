@@ -15,27 +15,17 @@ public class User implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @Setter
-    @Getter
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Setter
-    @Getter
     @Column(nullable = false, length = 50)
     private String username;
 
-    @Setter
-    @Getter
     @Column(nullable = false)
     private String password;
 
-    @Setter
-    @Getter
     private String salt;  //加密的盐
 
-    @Setter
-    @Getter
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "UserRole", joinColumns = {@JoinColumn(name = "userId")},
         inverseJoinColumns = {@JoinColumn(name = "roleId")})
