@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Data
 @Entity
@@ -22,5 +23,10 @@ public class Tag implements Serializable {
     @Setter
     @Getter
     private String name;
+
+    @Setter
+    @Getter
+    @ManyToMany(fetch = FetchType.EAGER)
+    private List<Article> articles;
 
 }

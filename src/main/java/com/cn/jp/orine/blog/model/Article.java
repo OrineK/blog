@@ -49,7 +49,7 @@ public class Article implements Serializable {
 
     @Setter
     @Getter
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "ArticleTag", joinColumns = {@JoinColumn(name = "articleId")},
             inverseJoinColumns = {@JoinColumn(name = "tagId")})
     private List<Tag> tags; //标签
