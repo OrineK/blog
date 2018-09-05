@@ -1,12 +1,20 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html>
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>JpOrine-Blog</title>
-    <link rel="stylesheet" href="/layui/css/layui.css">
-    <link rel="stylesheet" href="/layui/css/modules/layer/default/layer.css">
-    <link rel="stylesheet" href="/layui/css/modules/laydate/default/laydate.css">
+    <meta http-equiv="Content-Type" content="text/html; Charset=utf-8" />
+    <meta http-equiv="Content-Language" content="zh-CN" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <title>JpOrine</title>
+    <link rel="shortcut icon" href="images/logo.png" type="image/x-icon" />
+    <!--Layui-->
+    <link href="layui/css/layui.css" rel="stylesheet" />
+    <!--font-awesome-->
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <!--全局样式表-->
+    <link href="css/global.css" rel="stylesheet" />
+    <link href="css/animate.min.css" rel="stylesheet" />
+    <!-- 本页样式表 -->
+    <link href="css/index.css" rel="stylesheet" />
+    <link href="css/blog.css" rel="stylesheet" />
 </head>

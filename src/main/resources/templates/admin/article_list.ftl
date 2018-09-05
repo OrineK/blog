@@ -12,6 +12,7 @@
     </script>
 </div>
 <#include "/admin/common/footer.ftl">
+<script type="text/javascript" src="/js/global.js"></script>
 <script type="text/javascript">
     layui.use('table', function(){
         var table = layui.table;
@@ -39,7 +40,10 @@
                 {field: 'cateName', title: '分类', align:"center", templet:'<div>{{d.category.name}}</div>'},
                 {field: 'clickNum', title: '点击数', align:"center"},
                 {field: 'startNum', title: '点赞数', align:"center"},
-                {field: 'createTime', title: '发布时间', align:"center", sort: 'true'},
+                {field: 'createTime', title: '发布时间', align:"center", sort: 'true',
+                templet:function (row) {
+                    return new Date(row.createTime).Format("yyyy-MM-dd hh:mm:ss");
+                }},
                 {fixed: 'right', title: '操作', align:'center', toolbar: '#barDemo'}
             ]]
         });

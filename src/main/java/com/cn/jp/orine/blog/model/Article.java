@@ -40,9 +40,11 @@ public class Article implements Serializable {
             inverseJoinColumns = {@JoinColumn(name = "tagId")})
     private List<Tag> tags; //标签
 
-    private Date createTime = DateUtil.getNow(); //创建时间
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createTime = new Date(); //创建时间
 
-    private Date updateTime = DateUtil.getNow(); //修改时间
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date updateTime; //修改时间
 
     private String Author;  //作者
 

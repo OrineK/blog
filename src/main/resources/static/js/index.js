@@ -17,6 +17,25 @@
       
     });
 
+    flow.load({
+        elem: "#parentArticleList"
+        ,isLazyimg:true
+        ,done: function(page, next){ //到达临界点（默认滚动触发），触发下一页
+            var lis = [];
+            //以jQuery的Ajax请求为例，请求下一页数据（注意：page是从2开始返回）
+            $.get('/article/list?page='+page, function(res){
+                console.log(res)
+                //假设你的列表返回在data集合中
+                layui.each(res.data.content, function(index, item){
+                    lis.push(article_item(item));
+                });
+                //执行下一页渲染，第二参数为：满足“加载更多”的条件，即后面仍有分页
+                //pages为Ajax返回的总页数，只有当前页小于总页数的情况下，才会继续出现加载更多
+                next(lis.join(''), page < res.data.totalPages);
+            });
+        }
+    });
+
     $(".home-tips-container span").click(function(){
         layer.msg($(this).text(), {
             time: 20000, //20s后自动关闭
@@ -78,6 +97,31 @@
 
 function classifyList(id){
     	layer.msg('功能要自己写');
+}
+
+function article_item(json) {
+    var time = new Date(json.createTime).Format("yyyy-MM-dd hh:mm:ss");
+    var html = '<div class="article shadow animated zoomIn">'+
+        '<div class="article-left ">' +
+        '<img src="'+json.coverImg+'" alt="'+json.title+'">' +
+        '</div>'+
+        '<div class="article-right">'+
+        '<div class="article-title">'+
+        '<span class="article_is_yc">原创</span>&nbsp;'+
+        '<a href="detail.html">'+json.title+'</a>'+
+        '</div>'+
+        '<div class="article-abstract">'+json.summary+'</div>'+
+    '</div>'+
+    '<div class="clear"></div>'+
+        '<div class="article-footer">'+
+        '<span><i class="fa fa-clock-o"></i>&nbsp;&nbsp;'+time+'</span>'+
+    '<span class="article-author"><i class="fa fa-user"></i>&nbsp;&nbsp;'+json.author+'</span>'+
+    '<span><i class="fa fa-tag"></i>&nbsp;&nbsp;<a href="javascript:classifyList(5);"> '+json.category.name+'</a></span>'+
+    '<span class="article-viewinfo"><i class="fa fa-eye"></i>&nbsp;'+json.clickNum+'</span>'+
+    '<span class="article-viewinfo"><i class="fa fa-commenting"></i>&nbsp;'+json.startNum+'</span>'+
+    '</div>'+
+    '</div>';
+    return html;
 }
 
 
