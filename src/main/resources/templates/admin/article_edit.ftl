@@ -44,6 +44,15 @@
                 </div>
             </div>
             <div class="layui-form-item">
+                <label class="layui-form-label">是否原创</label>
+                <div class="layui-input-inline">
+                    <select name="type" lay-filter="type" id="type">
+                        <option <#if article.type == "ORIGINAL">selected="selected"</#if> value="ORIGINAL">原创</option>
+                        <option <#if article.type == "REPRINT">selected="selected"</#if> value="REPRINT">转载</option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-form-item">
                 <div class="layui-upload">
                     <button type="button" class="layui-btn" id="upload">上传封面图</button>
                     <div class="layui-upload-list">

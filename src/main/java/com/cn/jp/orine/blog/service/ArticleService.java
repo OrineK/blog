@@ -122,6 +122,10 @@ public class ArticleService {
         return req;
     }
 
+    public Article getAticleById(Long id) {
+        return articleDao.getOne(id);
+    }
+
     public Page<Article> findList(ArticleQueryReq req) {
         Sort sort = new Sort(Sort.Direction.DESC, "id");
         Pageable pageable = PageRequest.of(req.getCurrentPage(), req.getPageSize(), sort);

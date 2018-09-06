@@ -63,6 +63,7 @@ public class AdminController {
     @RequestMapping(value = "/addArticle", method = RequestMethod.POST)
     @ResponseBody
     public JSON addArticle(ArticleAddReq req) {
+        System.out.println(req.toString());
         articleService.addArticle(req);
         return JsonUtil.newJson().toJson();
     }

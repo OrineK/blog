@@ -54,7 +54,7 @@
             var tr = obj.tr; //获得当前行 tr 的DOM对象
 
             if (layEvent == 'detail') {
-                //TODO
+                window.open('/article/detail/'+data.id)
             }else if (layEvent == 'edit') {
                 location.href = '/admin/editArticle/'+data.id
             }else if (layEvent == 'del') {

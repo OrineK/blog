@@ -103,12 +103,13 @@ function article_item(json) {
     var time = new Date(json.createTime).Format("yyyy-MM-dd hh:mm:ss");
     var html = '<div class="article shadow animated zoomIn">'+
         '<div class="article-left ">' +
+        '<a href="/article/detail/'+json.id+'">'+
         '<img src="'+json.coverImg+'" alt="'+json.title+'">' +
-        '</div>'+
+        '</a></div>'+
         '<div class="article-right">'+
         '<div class="article-title">'+
-        '<span class="article_is_yc">原创</span>&nbsp;'+
-        '<a href="detail.html">'+json.title+'</a>'+
+        '<span class="article_is_yc">'+json.type+'</span>&nbsp;'+
+        '<a href="/article/detail/'+json.id+'">'+json.title+'</a>'+
         '</div>'+
         '<div class="article-abstract">'+json.summary+'</div>'+
     '</div>'+

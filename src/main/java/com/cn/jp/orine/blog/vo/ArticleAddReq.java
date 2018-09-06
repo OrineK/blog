@@ -1,44 +1,34 @@
 package com.cn.jp.orine.blog.vo;
 
+import com.cn.jp.orine.blog.model.Article;
+import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import java.util.List;
 
 @Data
 public class ArticleAddReq {
 
-    @Setter
-    @Getter
     private Long id;
 
-    @Setter
-    @Getter
     private String title;
 
-    @Setter
-    @Getter
     private String content;
 
-    @Setter
-    @Getter
     private String coverImg; //封面图片
 
-    @Setter
-    @Getter
     private String summary;
 
-    @Setter
-    @Getter
     private String Author;  //作者
 
-    @Setter
-    @Getter
     private Long categoryId;  //分类id
 
-    @Setter
-    @Getter
     private List<String> tagNames;  //标签
+
+    private Article.Type type;
 
 }

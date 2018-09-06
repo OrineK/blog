@@ -1,9 +1,7 @@
 package com.cn.jp.orine.blog.model;
 
-import com.cn.jp.orine.blog.utils.DateUtil;
+import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -52,4 +50,24 @@ public class Article implements Serializable {
 
     private Integer startNum = 0;  //点赞数
 
+    @Enumerated(EnumType.STRING)
+    private Type type;
+
+    public enum Type {
+
+        ORIGINAL("原创"),
+
+        REPRINT("转载");
+
+        private String text;
+
+        private Type(String text) {
+            this.text = text;
+        }
+
+        @JsonValue
+        public String getText() {
+            return text;
+        }
+    }
 }

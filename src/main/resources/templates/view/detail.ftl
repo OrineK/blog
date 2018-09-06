@@ -8,76 +8,45 @@
 		<title th:text="longwang博客文章专栏'"></title>
 		<link rel="shortcut icon" href="images/logo.png" type="image/x-icon" />
 		<!--Layui-->
-		<link href="layui/css/layui.css" rel="stylesheet" />
+		<link href="/layui/css/layui.css" rel="stylesheet" />
 		<!--font-awesome-->
-		<link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+		<link href="/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
 		<!--全局样式表-->
-		<link href="css/global.css" rel="stylesheet" />
-		<link href="css/animate.min.css" rel="stylesheet" />
+		<link href="/css/global.css" rel="stylesheet" />
+		<link href="/css/animate.min.css" rel="stylesheet" />
 		<!-- 本页样式表 -->
-		<link href="css/detail.css" rel="stylesheet" />
-		<link href="css/blog.css" rel="stylesheet" />
+		<link href="/css/detail.css" rel="stylesheet" />
+		<link href="/css/blog.css" rel="stylesheet" />
 		<!-- jquery -->
-		<script src="js/jquery.min.js"></script>
+		<script src="/js/jquery.min.js"></script>
 	</head>
 
 	<body>
 
-		<nav id="h" class="blog-nav layui-header">
-			<div class="blog-container">
-
-				<a href="/QQ/qqLogin" class="blog-user">
-					<i class="fa fa-qq"></i>
-				</a>
-
-				<a class="blog-logo" href="index.html">Long</a>
-
-				<ul class="layui-nav" lay-filter="nav">
-					<li class="layui-nav-item">
-						<a href="index.html"><i class="fa fa-home fa-fw"></i>&nbsp;网站首页</a>
-					</li>
-					<li class="layui-nav-item">
-						<a href="article.html"><i class="fa fa-file-text fa-fw"></i>&nbsp;文章专栏</a>
-					</li>
-					<li class="layui-nav-item">
-						<a href="mixed_pic.html"><i class="fa fa-paper-plane-o fa-fw"></i>&nbsp;杂七杂八</a>
-					</li>
-					<li class="layui-nav-item">
-						<a href="timeline.html"><i class="fa fa-hourglass-half fa-fw"></i>&nbsp;点点滴滴</a>
-					</li>
-					<li class="layui-nav-item">
-						<a href="about.html"><i class="fa fa-info fa-fw"></i>&nbsp;关于本站</a>
-					</li>
-					<span class="layui-nav-bar"></span></ul>
-
-				<a class="blog-navicon" href="javascript:;">
-					<i class="fa fa-navicon"></i>
-				</a>
-			</div>
-		</nav>
+		<#include "/view/common/nav.ftl">
 
 		<div class="blog-body">
 
 			<div class="blog-container">
 				<div class="blog-main">
 					<blockquote class="layui-elem-quote sitemap layui-breadcrumb shadow" style="visibility: visible;">
-						<a href="index.html" title="网站首页">网站首页<span class="layui-box">&gt;</span></a>
+						<a href="/" title="网站首页">网站首页<span class="layui-box">&gt;</span></a>
 						<a href="article.html" title="文章专栏">文章专栏<span class="layui-box">&gt;</span></a>
-						<a><cite class="title">Spring boot 的核心配置文件</cite></a>
+						<a><cite class="title">${article.title}</cite></a>
 					</blockquote>
 					<div class="blog-main">
 
 						<div id="parentArticleList" class="blog-main-left animated slideInLeft">
 
 							<div class="article-detail shadow">
-								<div class="article-detail-title title">Spring boot 的核心配置文件</div>
+								<div class="article-detail-title title">${article.title}</div>
 								<div class="article-detail-info">
-									<span>编辑时间：2018-07-27 15:09:26.0</span>
-									<span>作者：听雨·湘潭</span>
-									<span>浏览量：71</span>
+									<span>编辑时间：${article.updateTime}</span>
+									<span>作者：${article.author}</span>
+									<span>浏览量：${article.clickNum}</span>
 								</div>
 								<div id="articleContent" style="overflow: hidden;" class="article-detail-content">
-									<p>在主配置文件中设置：spring.profiles.active=product</p>
+									${article.content}
 								</div>
 							</div>
 
@@ -110,7 +79,10 @@
 
  <div class="article-category shadow ">
 <div class="article-category-title ">分类导航</div>
-<a href="javascript:classifyList(1); ">Java基础</a><a href="javascript:classifyList(2); ">web开发</a><a href="javascript:classifyList(3); ">开发工具</a><a href="javascript:classifyList(4); ">心情日记</a><a href="javascript:classifyList(5); ">SpringBoot</a><a href="javascript:classifyList(6); ">Dubbo</a><a href="javascript:classifyList(7); ">Redis</a><a href="javascript:classifyList(8); ">Maven</a><a href="javascript:classifyList(9); ">Centos</a><a href="javascript:classifyList(10); ">Tomcat</a><a href="javascript:classifyList(11); ">技术交流</a>
+	 <#list categories as cate>
+		<a href="javascript:classifyList(${cate.id}); ">${cate.name}</a>
+	 </#list>
+<#--<a href="javascript:classifyList(1); ">Java基础</a><a href="javascript:classifyList(2); ">web开发</a><a href="javascript:classifyList(3); ">开发工具</a><a href="javascript:classifyList(4); ">心情日记</a><a href="javascript:classifyList(5); ">SpringBoot</a><a href="javascript:classifyList(6); ">Dubbo</a><a href="javascript:classifyList(7); ">Redis</a><a href="javascript:classifyList(8); ">Maven</a><a href="javascript:classifyList(9); ">Centos</a><a href="javascript:classifyList(10); ">Tomcat</a><a href="javascript:classifyList(11); ">技术交流</a>-->
 <div class="clear "></div>
 </div>
 <div class="blog-module shadow ">
@@ -238,51 +210,10 @@
 </div>
 </div>
 
-<footer id="f " class="blog-footer ">
-<p><span>Copyright</span><span>©</span><span>2018</span><a href="http://www.long225.cn ">Long博客</a><span>Design By Longwang</span></p>
-<p><a href="http://www.miitbeian.gov.cn " target="_blank ">湘ICP备18010289号</a></p>
-</footer>
+<#include "/view/common/footer.ftl">
 
-<ul class="layui-nav layui-nav-tree layui-nav-side blog-nav-left layui-hide" lay-filter="nav">
-			<li class="layui-nav-item">
-				<a href="index.html"><i class="fa fa-home fa-fw"></i>&nbsp;网站首页</a>
-			</li>
-			<li class="layui-nav-item">
-				<a href="article.html"><i class="fa fa-file-text fa-fw"></i>&nbsp;文章专栏</a>
-			</li>
-			<li class="layui-nav-item">
-				<a href="mixed_pic.html"><i class="fa fa-paper-plane-o fa-fw"></i>&nbsp;杂七杂八</a>
-			</li>
-			<li class="layui-nav-item">
-				<a href="timeline.html"><i class="fa fa-road fa-fw"></i>&nbsp;点点滴滴</a>
-			</li>
-			<li class="layui-nav-item">
-				<a href="about.html"><i class="fa fa-info fa-fw"></i>&nbsp;关于本站</a>
-			</li>
-			<span class="layui-nav-bar"></span>
-		</ul>
-
-
-<div class="blog-share layui-hide ">
-<div class="blog-share-body ">
-<div style="width: 200px;height:100%; ">
-<div class="bdsharebuttonbox bdshare-button-style0-32 " data-bd-bind="1533793311472 ">
-<a class="bds_qzone " data-cmd="qzone " title="分享到QQ空间 "></a>
-<a class="bds_tsina " data-cmd="tsina " title="分享到新浪微博 "></a>
-<a class="bds_weixin " data-cmd="weixin " title="分享到微信 "></a>
-<a class="bds_sqq " data-cmd="sqq " title="分享到QQ好友 "></a>
-</div>
-</div>
-</div>
-</div>
-
-<div class="blog-mask animated layui-hide "></div>
-
-<script src="layui/layui.js "></script>
-<script src="js/global.js "></script>
-
-<script src="js/about.js "></script>
-<script src="js/detail.js "></script>
+<script src="/js/about.js "></script>
+<script src="/js/detail.js "></script>
 
 </body>
 </html>
