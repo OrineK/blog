@@ -15,6 +15,14 @@ public class CategoryService {
     @Resource
     private CategoryDao categoryDao;
 
+    public void delete(Category category) {
+        categoryDao.delete(category);
+    }
+
+    public Category findById(Long id) {
+        return categoryDao.getOne(id);
+    }
+
     public void addCategory(Category category) {
         try {
             categoryDao.save(category);

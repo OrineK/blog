@@ -13,7 +13,7 @@
                     <dd class="<#if sidebar == 'article_list'>layui-this</#if>"><a href="/admin/articleList">文章列表</a></dd>
                 </dl>
             </li>
-            <li class="layui-nav-item <#if sidebar == 'category'>layui-this</#if>"><a href="">分类管理</a></li>
+            <li class="layui-nav-item <#if sidebar == 'category'>layui-this</#if>"><a href="/admin/categories">分类管理</a></li>
             <li class="layui-nav-item <#if sidebar == 'tag'>layui-this</#if>"><a href="">标签管理</a></li>
             <li class="layui-nav-item <#if sidebar == 'system'>layui-this</#if>"><a href="">系统管理</a></li>
         </ul>

@@ -2,6 +2,7 @@ package com.cn.jp.orine.blog.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.cn.jp.orine.blog.Exception.BusinessException;
 import com.cn.jp.orine.blog.constant.SysContant;
 import com.cn.jp.orine.blog.model.Article;
 import com.cn.jp.orine.blog.model.Category;
@@ -14,6 +15,7 @@ import com.cn.jp.orine.blog.vo.ArticleAddReq;
 import com.cn.jp.orine.blog.vo.ArticleEditReq;
 import com.cn.jp.orine.blog.vo.ArticleQueryReq;
 import org.apache.shiro.authz.annotation.RequiresRoles;
+import org.hibernate.annotations.Parameter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -113,4 +115,41 @@ public class AdminController {
         return JsonUtil.newJson().addData("count", articlePage.getTotalElements())
                 .addData("data", articlePage.getContent()).toJson();
     }
+
+    @RequestMapping(value = "/categories", method = RequestMethod.GET)
+    @ResponseBody
+    public ModelAndView categoryList(HttpSession session) {
+        ModelAndView mav = new ModelAndView();
+        User user = (User) session.getAttribute(SysContant.USER_SESSION);
+        mav.addObject(user);
+        mav.addObject("sidebar", "category");
+        mav.setViewName("admin/category_list");
+        return mav;
+    }
+
+    @RequestMapping(value = "/delCategory/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public JSON delCategory(@PathVariable("id") Long id) {
+        Category category = categoryService.findById(id);
+        if (category == null) {
+            logger.info("category not fund");
+            throw new BusinessException("分类不存在，参数错误");
+        }
+        categoryService.delete(category);
+        return JsonUtil.newJson().toJson();
+    }
+
+    @RequestMapping(value = "/editCategory/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public JSON editCategory(@PathVariable("id") Long id, @RequestParam("name") String name) {
+        Category category = categoryService.findById(id);
+        if (category == null) {
+            logger.info("category not fund");
+            throw new BusinessException("分类不存在，参数错误");
+        }
+        category.setName(name);
+        categoryService.editCategory(category);
+        return JsonUtil.newJson().toJson();
+    }
+
 }
