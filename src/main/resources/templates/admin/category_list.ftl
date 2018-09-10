@@ -3,6 +3,9 @@
 <#include "/admin/common/sidebar.ftl">
 
 <div class="layui-body">
+    <div style="float: right; margin: 10px;">
+        <button id="addNew" class="layui-btn layui-btn-normal layui-btn-radius"><i class="layui-icon"></i>新增</button>
+    </div>
     <table class="layui-table" id="list" lay-filter="list"></table>
 
     <script type="text/html" id="barDemo">
@@ -76,6 +79,25 @@
                             },'json');
                         });
             }
+        });
+
+        $("#addNew").on("click", function () {
+            layer.prompt({title: '输入分类名称', formType: 3}, function(text, index){
+                if (text == '') {
+                    layer.msg("分类名必须填写");
+                    return false;
+                }
+                $.post("/admin/addCategory", {name : text}, function (res) {
+                    if (res.code == 200) {
+                        layer.msg("添加成功", {time: 2000}, function () {
+                            location.reload()
+                        })
+                    }else {
+                        layer.msg(res.message);
+                    }
+
+                })
+            });
         })
     });
 </script>

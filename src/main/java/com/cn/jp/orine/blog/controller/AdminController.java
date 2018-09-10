@@ -116,6 +116,17 @@ public class AdminController {
                 .addData("data", articlePage.getContent()).toJson();
     }
 
+    @RequestMapping(value = "/addCategory", method = RequestMethod.POST)
+    @ResponseBody
+    public JSON addCategory(Category category) {
+        Category old = categoryService.findByName(category.getName());
+        if (old != null) {
+            throw new BusinessException("分类名已存在");
+        }
+        categoryService.addCategory(category);
+        return JsonUtil.newJson().toJson();
+    }
+
     @RequestMapping(value = "/categories", method = RequestMethod.GET)
     @ResponseBody
     public ModelAndView categoryList(HttpSession session) {

@@ -19,6 +19,10 @@ public class CategoryService {
         categoryDao.delete(category);
     }
 
+    public Category findByName(String name) {
+        return categoryDao.findByName(name);
+    }
+
     public Category findById(Long id) {
         return categoryDao.getOne(id);
     }

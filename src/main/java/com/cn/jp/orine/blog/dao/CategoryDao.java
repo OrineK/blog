@@ -7,4 +7,6 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 public interface CategoryDao extends JpaRepository<Category, Long>, JpaSpecificationExecutor<Category> {
 
     Category findCategoryById(Long id);
+
+    Category findByName(String name);
 }
