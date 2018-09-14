@@ -28,17 +28,15 @@
 		<div class="blog-body">
 			<div class="layui-carousel blog-bg" id="carousel" lay-anim="default" lay-indicator="inside" lay-arrow="always" style="width: 1170px; height: 360px;">
 				<div carousel-item="">
-					<div class="bg bg_a"></div>
+					<div class="bg bg_a layui-this"></div>
 					<div class="bg bg_b"></div>
-					<div class="bg bg_c layui-this"></div>
+					<div class="bg bg_c"></div>
 					<div class="bg bg_d"></div>
-					<div class="bg bg_e"></div>
 				</div>
 				<div class="layui-carousel-ind">
 					<ul>
-						<li class=""></li>
-						<li class=""></li>
 						<li class="layui-this"></li>
+						<li class=""></li>
 						<li class=""></li>
 						<li class=""></li>
 					</ul>
@@ -48,10 +46,14 @@
 
 					<div class="home-tips shadow">
 						<i style="float:left;line-height:17px;" class="fa fa-volume-up"></i>
-						<div class="home-tips-container">
-							<span style="color: rgb(0, 150, 136); cursor: pointer; display: none;"><p><span>网站处于试运行过程，如遇到bug，可以及时与我联系哦，首页左侧可以联系我，或者给我留言。</span></p>
-							</span><span style="color: rgb(0, 150, 136); cursor: pointer; display: block;"><p><span>Long博客&nbsp; —— &nbsp;一个Java程序员的个人博客，网站采用Layui为前端框架，记录技术交流，工作心得体会！</span></p>
-							</span><span style="color: rgb(0, 150, 136); cursor: pointer; display: none;">感谢您发现本站，由于某些原因导致数据库丢失，但本站内容会持续更新的。</span>
+						<div class="home-tips-container" id="out_notice">
+							<#--<span style="color: rgb(0, 150, 136); cursor: pointer; display: none;">-->
+								<#--<p><span>网站处于试运行过程，如遇到bug，可以及时与我联系哦，首页左侧可以联系我，或者给我留言。</span></p>-->
+							<#--</span>-->
+							<#--<span style="color: rgb(0, 150, 136); cursor: pointer; display: block;">-->
+								<#--<p><span>Long博客&nbsp; —— &nbsp;一个Java程序员的个人博客，网站采用Layui为前端框架，记录技术交流，工作心得体会！</span></p>-->
+							<#--</span>-->
+							<#--<span style="color: rgb(0, 150, 136); cursor: pointer; display: none;">感谢您发现本站，由于某些原因导致数据库丢失，但本站内容会持续更新的。</span>-->
 						</div>
 					</div>
 

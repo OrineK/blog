@@ -39,7 +39,7 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">标签</label>
                 <div class="layui-input-inline">
-                    <input type="text" id="tagNames" name="tagNames" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
+                    <input type="text" id="tagNames" name="tagNames" lay-verify="required" placeholder="Java,PHP" autocomplete="off" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">

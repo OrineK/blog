@@ -75,10 +75,20 @@
     });
     
     $(function () {
-
-        $(".fa-home").parent().parent().addClass("layui-this");
-        //播放公告
-        playAnnouncement(5000);
+        $.get("/notice/list", function (res) {
+            if (res.data.length > 0) {
+                for (var i = 0; i < res.data.length; i++) {
+                    var html = '<span style="color: rgb(0, 150, 136); cursor: pointer; display: block;">';
+                    html += '<p><span>';
+                    html += res.data[i].content;
+                    html += '</span></p></span>';
+                    $("#out_notice").append(html);
+                }
+            }
+            $(".fa-home").parent().parent().addClass("layui-this");
+            //播放公告
+            playAnnouncement(3000);
+        });
     });
     
     function playAnnouncement(interval) {

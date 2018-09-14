@@ -15,6 +15,7 @@
             </li>
             <li class="layui-nav-item <#if sidebar == 'category'>layui-this</#if>"><a href="/admin/categories">分类管理</a></li>
             <li class="layui-nav-item <#if sidebar == 'tag'>layui-this</#if>"><a href="">标签管理</a></li>
+            <li class="layui-nav-item <#if sidebar == 'notice'>layui-this</#if>"><a href="/admin/notice">通知管理</a></li>
             <li class="layui-nav-item <#if sidebar == 'system'>layui-this</#if>"><a href="">系统管理</a></li>
         </ul>
     </div>
