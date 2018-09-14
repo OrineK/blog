@@ -6,7 +6,7 @@
     <groupId>com.cn.jp.orine</groupId>
     <artifactId>blog</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <packaging>war</packaging>
+    <packaging>war</packaging> 
 
     <name>blog</name>
     <description>Demo project for Spring Boot</description>
