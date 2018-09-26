@@ -46,18 +46,18 @@ public class BlogApplicationTests {
 
     }
 
-    @Test
-    public void tagList() {
-        List<Tag> tags = tagDao.findAll();
-        for (Tag tag : tags) {
-            System.out.println(tag.getName() + ":" +tag.getArticles().size());
-        }
-    }
-
-    @Test
-    @Transactional
-    public void articleInfo() {
-        Article article = articleDao.getOne(5L);
-        System.out.println(article.toString());
-    }
+//    @Test
+//    public void tagList() {
+//        List<Tag> tags = tagDao.findAll();
+//        for (Tag tag : tags) {
+//            System.out.println(tag.getName() + ":" +tag.getArticles().size());
+//        }
+//    }
+//
+//    @Test
+//    @Transactional
+//    public void articleInfo() {
+//        Article article = articleDao.getOne(5L);
+//        System.out.println(article.toString());
+//    }
 }

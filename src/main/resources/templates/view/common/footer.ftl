@@ -1,6 +1,5 @@
 <footer id="f " class="blog-footer ">
-    <p><span>Copyright</span><span>©</span><span>2018</span><a href="http://www.long225.cn ">Long博客</a><span>Design By Longwang</span></p>
-    <p><a href="http://www.miitbeian.gov.cn " target="_blank ">湘ICP备18010289号</a></p>
+    <p>知之者不如好之者，好之者不如乐之者</p>
 </footer>
 
 <div class="blog-mask animated layui-hide"></div>

@@ -31,7 +31,7 @@
 				<div class="blog-main">
 					<blockquote class="layui-elem-quote sitemap layui-breadcrumb shadow" style="visibility: visible;">
 						<a href="/" title="网站首页">网站首页<span class="layui-box">&gt;</span></a>
-						<a href="article.html" title="文章专栏">文章专栏<span class="layui-box">&gt;</span></a>
+						<a href="article.ftl" title="文章专栏">文章专栏<span class="layui-box">&gt;</span></a>
 						<a><cite class="title">${article.title}</cite></a>
 					</blockquote>
 					<div class="blog-main">

@@ -36,35 +36,8 @@
         }
     });
 
-    $(".home-tips-container span").click(function(){
-        layer.msg($(this).text(), {
-            time: 20000, //20s后自动关闭
-            btn: ['明白了']
-        });
-    });
-
-
-    $(".recent-list .hotusers-list-item").mouseover(function () {
-        var name = $(this).children(".remark-user-avator").attr("data-name");
-        var str = "【"+name+"】的评论";
-        layer.tips(str, this, {
-            tips: [2,'#666666']
-        });
-    });
-
-
-    $("#QQjl").mouseover(function(){
-        layer.tips('QQ交流', this,{
-            tips: 1
-        });
-    });
     $("#gwxx").mouseover(function(){
-        layer.tips('给我写信', this,{
-            tips: 1
-        });
-    });
-    $("#xlwb").mouseover(function(){
-        layer.tips('新浪微博', this,{
+        layer.tips('Email', this,{
             tips: 1
         });
     });
@@ -114,7 +87,7 @@ function article_item(json) {
     var html = '<div class="article shadow animated zoomIn">'+
         '<div class="article-left ">' +
         '<a href="/article/detail/'+json.id+'">'+
-        '<img src="'+json.coverImg+'" alt="'+json.title+'">' +
+        '<img class="cover-img" src="'+json.coverImg+'" alt="'+json.title+'">' +
         '</a></div>'+
         '<div class="article-right">'+
         '<div class="article-title">'+

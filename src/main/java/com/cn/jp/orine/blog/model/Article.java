@@ -42,7 +42,7 @@ public class Article implements Serializable {
     private Date createTime = new Date(); //创建时间
 
     @Temporal(TemporalType.TIMESTAMP)
-    private Date updateTime; //修改时间
+    private Date updateTime = new Date(); //修改时间
 
     private String Author;  //作者
 

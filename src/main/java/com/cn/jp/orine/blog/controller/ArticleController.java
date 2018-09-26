@@ -23,6 +23,13 @@ public class ArticleController {
     @Resource
     private CategoryService categoryService;
 
+    @RequestMapping(value = "/index", method = RequestMethod.GET)
+    public ModelAndView index() {
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("view/article");
+        return mav;
+    }
+
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     @ResponseBody
     public JSON findArticleList(ArticleQueryReq req) {

@@ -472,7 +472,7 @@ body {
 }
 
     .article:hover {
-        border-left: 5px solid #009688;
+        border-left: 5px solid #01AAED;
         -moz-transition: all 0.3s linear;
         -o-transition: all 0.3s linear;
         -webkit-transition: all 0.3s linear;
@@ -491,7 +491,7 @@ body {
         }
 
     .article > .article-right {
-        width: 70%;
+        width: 73%;
         float: right;
         padding-left: 2%;
     }

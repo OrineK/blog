@@ -180,7 +180,8 @@ public class StaticController {
 			logger.error("IO异常", e);
 			throw new BusinessException("文件上传失败！");
 		} finally {
-			resPath = resPicUrl + nid + "/" + getFolder() + "/" + fileName + "." + prefix;
+			//使用原图，不用缩略图
+			resPath = resPicUrl + nid + "/" + getFolder() + "/" + fileName + "_big." + prefix;
 			deleteFile(newfile);
 		}
 		return resPath;
