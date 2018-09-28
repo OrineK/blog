@@ -26,6 +26,10 @@ public class ResultMsg {
      * 系统异常
      */
     public static final String SYSTEM_FAIL = "系统异常";
+    /**
+     * 管理员初始化错误
+     */
+    public static final String INIT_ADMIN_ERROR = "管理员信息初始化错误";
 
     /**
      * 参数错误

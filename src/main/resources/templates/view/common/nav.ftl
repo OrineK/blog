@@ -5,7 +5,7 @@
             <i class="fa fa-qq"></i>
         </a>
 
-        <a class="blog-logo" href="index.html">杂食程序员</a>
+        <a class="blog-logo" href="">杂食程序员</a>
 
         <ul class="layui-nav" lay-filter="nav">
             <li class="layui-nav-item">
