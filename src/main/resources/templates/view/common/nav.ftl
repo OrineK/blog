@@ -1,9 +1,9 @@
 <nav id="h" class="blog-nav layui-header">
     <div class="blog-container">
 
-        <a href="/QQ/qqLogin" class="blog-user">
-            <i class="fa fa-qq"></i>
-        </a>
+        <#--<a href="/QQ/qqLogin" class="blog-user">-->
+            <#--<i class="fa fa-qq"></i>-->
+        <#--</a>-->
 
         <a class="blog-logo" href="">杂食程序员</a>
 

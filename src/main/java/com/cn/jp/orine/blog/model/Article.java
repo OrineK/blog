@@ -51,7 +51,15 @@ public class Article implements Serializable {
     private Integer startNum = 0;  //点赞数
 
     @Enumerated(EnumType.STRING)
+    private EditorType editorType;
+
+    @Enumerated(EnumType.STRING)
     private Type type;
+
+    public enum EditorType{
+        LayEditor,
+        MdEditor
+    }
 
     public enum Type {
 

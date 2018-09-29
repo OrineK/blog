@@ -6,6 +6,7 @@
     <div style="padding: 15px;">
         <form class="layui-form layui-form-pane">
             <input type="hidden" id="Author" name="Author" value="jp.orine">
+            <input type="hidden" id="editorType" name="editorType" value="LayEditor">
             <input type="hidden" id="id" name="id" value="${article.id}">
             <div class="layui-form-item">
                 <label class="layui-form-label">分类</label>

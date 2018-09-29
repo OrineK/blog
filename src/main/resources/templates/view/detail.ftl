@@ -19,14 +19,21 @@
 		<link href="/css/blog.css" rel="stylesheet" />
 		<!-- jquery -->
 		<script src="/js/jquery.min.js"></script>
+		<link rel="stylesheet" href="/editor.md/css/editormd.css">
 	</head>
+
+	<style>
+        .editormd-preview-container, .editormd-html-preview {
+            padding: 0;
+		}
+	</style>
 
 	<body>
 
 		<#include "/view/common/nav.ftl">
 
 		<div class="blog-body">
-
+            <input type="hidden" id="editorType" value="${article.editorType}">
 			<div class="blog-container">
 				<div class="blog-main">
 					<blockquote class="layui-elem-quote sitemap layui-breadcrumb shadow" style="visibility: visible;">
@@ -46,7 +53,11 @@
 									<span>浏览量：${article.clickNum}</span>
 								</div>
 								<div id="articleContent" style="overflow: hidden;" class="article-detail-content">
-									${article.content}
+									<#if article.editorType?? && article.editorType == "MdEditor">
+                                        <textarea style="display: none;">${article.content}</textarea>
+										<#else>
+										${article.content}
+									</#if>
 								</div>
 							</div>
 
@@ -85,124 +96,6 @@
 <#--<a href="javascript:classifyList(1); ">Java基础</a><a href="javascript:classifyList(2); ">web开发</a><a href="javascript:classifyList(3); ">开发工具</a><a href="javascript:classifyList(4); ">心情日记</a><a href="javascript:classifyList(5); ">SpringBoot</a><a href="javascript:classifyList(6); ">Dubbo</a><a href="javascript:classifyList(7); ">Redis</a><a href="javascript:classifyList(8); ">Maven</a><a href="javascript:classifyList(9); ">Centos</a><a href="javascript:classifyList(10); ">Tomcat</a><a href="javascript:classifyList(11); ">技术交流</a>-->
 <div class="clear "></div>
 </div>
-<div class="blog-module shadow ">
-<div class="blog-module-title ">相似文章</div>
-<ul class="blog-module-ul ">
-<li>
-<span>
-<i class="layui-badge-rim layui-bg-red ">1</i>
-</span>
-&nbsp;&nbsp;<a href="detail.html ">Spring Boot 表单验证@Valid</a>
-</li>
-<li>
-<span>
-<i class="layui-badge-rim layui-bg-orange ">2</i>
-</span>
-&nbsp;&nbsp;<a href="detail.html ">Spring boot 使用 JSP</a>
-</li>
-<li>
-<span>
-<i class="layui-badge-rim layui-bg-green ">3</i>
-</span>
-&nbsp;&nbsp;<a href="detail.html ">Spring boot 下的 Spring mvc</a>
-</li>
-<li>
-<span>
-<i class="layui-badge-rim ">4</i>
-</span>
-&nbsp;&nbsp;<a href="detail.html ">Spring boot 自定义配置</a>
-</li>
-<li>
-<span>
-<i class="layui-badge-rim ">5</i>
-</span>
-&nbsp;&nbsp;<a href="detail.html ">Spring boot 的核心配置文件</a>
-</li>
-<li>
-<span>
-<i class="layui-badge-rim ">6</i>
-</span>
-&nbsp;&nbsp;<a href="detail.html ">第一个 Spring boot 程序及解析</a>
-</li>
-<li>
-<span>
-<i class="layui-badge-rim ">7</i>
-</span>
-&nbsp;&nbsp;<a href="detail.html ">Spring boot 开发环境</a>
-</li>
-<li>
-<span>
-<i class="layui-badge-rim ">8</i>
-</span>
-&nbsp;&nbsp;<a href="detail.html ">SpringBoot简介</a>
-</li>
-</ul>
-</div>
-<div class="blog-module shadow ">
-<div class="blog-module-title ">随便看看</div>
-<ul class="blog-module-ul ">
-<li>
-<span>
-<i class="layui-badge-rim layui-bg-red ">1</i>
-</span>
-&nbsp;&nbsp;<a href="detail.html ">Centos7安装和配置Tomcat8</a>
-</li>
-<li>
-<span>
-<i class="layui-badge-rim layui-bg-orange ">2</i>
-</span>
-&nbsp;&nbsp;<a href="detail.html ">支付宝开发者入驻</a>
-</li>
-<li>
-<span>
-<i class="layui-badge-rim layui-bg-green ">3</i>
-</span>
-&nbsp;&nbsp;<a href="detail.html ">redis requires Ruby version &gt;= 2.2.2问题</a>
-</li>
-<li>
-<span>
-<i class="layui-badge-rim ">4</i>
-</span>
-&nbsp;&nbsp;<a href="detail.html ">Spring boot 开发环境</a>
-</li>
- <li>
-<span>
-<i class="layui-badge-rim ">5</i>
-</span>
-&nbsp;&nbsp;<a href="detail.html ">Tomcat优化性能，JVM优化</a>
-</li>
-<li>
-<span>
-<i class="layui-badge-rim ">6</i>
-</span>
-&nbsp;&nbsp;<a href="detail.html ">Centos7安装和配置jre1.8</a>
-</li>
-<li>
-<span>
-<i class="layui-badge-rim ">7</i>
-</span>
-&nbsp;&nbsp;<a href="detail.html ">怎么关闭eclipse对js xml的验证?</a>
-</li>
-<li>
-<span>
-<i class="layui-badge-rim ">8</i>
-</span>
-&nbsp;&nbsp;<a href="detail.html ">centos7对外开放端口</a>
-</li>
-<li>
-<span>
-<i class="layui-badge-rim ">9</i>
-</span>
-&nbsp;&nbsp;<a href="detail.html ">Java设计模式-单例模式</a>
-</li>
-<li>
-<span>
-<i class="layui-badge-rim ">10</i>
-</span>
-&nbsp;&nbsp;<a href="detail.html ">解决Tomcat中项目Url带中文参数乱码</a>
-</li>
-</ul>
-</div>
 </div>
 </div>
 <div class="clear "></div>
@@ -211,7 +104,16 @@
 </div>
 
 <#include "/view/common/footer.ftl">
-
+<#if article.editorType?? && article.editorType == "MdEditor">
+<script src="/editor.md/lib/marked.min.js"></script>
+<script src="/editor.md/lib/prettify.min.js"></script>
+<script src="/editor.md/lib/raphael.min.js"></script>
+<script src="/editor.md/lib/underscore.min.js"></script>
+<script src="/editor.md/lib/sequence-diagram.min.js"></script>
+<script src="/editor.md/lib/flowchart.min.js"></script>
+<script src="/editor.md/lib/jquery.flowchart.min.js"></script>
+<script src="/editor.md/editormd.js"></script>
+</#if>
 <script src="/js/about.js "></script>
 <script src="/js/detail.js "></script>
 

@@ -6,6 +6,8 @@
     <div style="padding: 15px;">
         <form class="layui-form layui-form-pane">
             <input type="hidden" id="Author" name="Author" value="jp.orine">
+            <input type="hidden" id="editorType" name="editorType" value="LayEditor">
+            <a href="/admin/addArticle/MdEditor" style="margin: 10px;" class="layui-layout-right layui-btn layui-btn-success">Markdown编辑器</a>
             <div class="layui-form-item">
                 <label class="layui-form-label">分类</label>
                 <div class="layui-input-inline">
@@ -95,7 +97,7 @@
                 //预读本地文件示例，不支持ie8
                 obj.preview(function(index, file, result){
                     $('#cover_img').attr('src', result); //图片链接（base64）
-                    $('#cover_img').attr({'width':'100px', 'height':'100px'});
+                    $('#cover_img').attr({'width':'190px', 'height':'100px'});
                 });
             }
             ,done: function(res){

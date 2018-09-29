@@ -47,15 +47,19 @@ public class AdminController {
         return mav;
     }
 
-    @RequestMapping(value = "/addArticle", method = RequestMethod.GET)
-    public ModelAndView addArticle(HttpSession session) {
+    @RequestMapping(value = "/addArticle/{type}", method = RequestMethod.GET)
+    public ModelAndView addArticle(HttpSession session, @PathVariable("type") Article.EditorType type) {
         User user = (User) session.getAttribute(SysContant.USER_SESSION);
         ModelAndView mav = new ModelAndView();
         mav.addObject(user);
         List<Category> categories = categoryService.list();
         mav.addObject("categories", categories);
         mav.addObject("sidebar", "article_add");
-        mav.setViewName("admin/article_add");
+        if (type == Article.EditorType.LayEditor) {
+            mav.setViewName("admin/article_add");
+        } else {
+            mav.setViewName("admin/article_add_md");
+        }
         return mav;
     }
 
@@ -91,7 +95,11 @@ public class AdminController {
         mav.addObject(user);
         mav.addObject("article", article);
         mav.addObject("sidebar", "article_list");
-        mav.setViewName("admin/article_edit");
+        if (article.getEditorType() == Article.EditorType.LayEditor) {
+            mav.setViewName("admin/article_edit");
+        }else {
+            mav.setViewName("admin/article_edit_md");
+        }
         return mav;
     }
 

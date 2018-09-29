@@ -71,7 +71,7 @@ public class ArticleService {
 
     public void updateArticle(ArticleAddReq req) {
         Article article = articleDao.getOne(req.getId());
-        BeanUitl.copyProperties(article, req);
+        BeanUitl.copyProperties(req, article);
         Category category = categoryDao.findCategoryById(req.getCategoryId());
         article.setCategory(category);
         List<Tag> tags = new ArrayList<>();

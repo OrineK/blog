@@ -16,7 +16,7 @@ public class CategoryController {
     @Resource
     private CategoryService categoryService;
 
-    @RequestMapping(value = "categories", method = RequestMethod.GET)
+    @RequestMapping(value = "/categories", method = RequestMethod.GET)
     @ResponseBody
     public JSON categories() {
         return JsonUtil.newJson().addData("data", categoryService.list()).toJson();

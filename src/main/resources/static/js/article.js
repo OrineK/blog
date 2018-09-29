@@ -12,6 +12,8 @@ layui.use(['form', 'jquery', 'flow'], function(){
         return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
     });
 
+    categories();
+
     flow.load({
         elem: "#parentArticleList"
         ,isLazyimg:true
@@ -19,7 +21,6 @@ layui.use(['form', 'jquery', 'flow'], function(){
             var lis = [];
             //以jQuery的Ajax请求为例，请求下一页数据（注意：page是从2开始返回）
             $.get('/article/list?page='+page, function(res){
-                console.log(res)
                 //假设你的列表返回在data集合中
                 layui.each(res.data.content, function(index, item){
                     lis.push(article_item(item));
@@ -82,4 +83,16 @@ function article_item(json) {
         '</div>'+
         '</div>';
     return html;
+}
+
+function categories() {
+    $.get("/categories", function (res) {
+        var data = res.data;
+        var html = '';
+        for (var i = 0; i < data.length; i++) {
+            html += '<a href="javascript:classifyList('+data[i].id+');">'+data[i].name+'</a>';
+        }
+        html += '<div class="clear"></div>';
+        $(".categoryOut").append(html);
+    })
 }

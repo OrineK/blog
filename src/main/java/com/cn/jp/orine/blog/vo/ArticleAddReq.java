@@ -31,4 +31,6 @@ public class ArticleAddReq {
 
     private Article.Type type;
 
+    private Article.EditorType editorType;
+
 }

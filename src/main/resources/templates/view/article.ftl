@@ -53,18 +53,6 @@
 
 						<div class="article-category shadow categoryOut">
 							<div class="article-category-title">分类导航</div>
-							<a href="javascript:classifyList(1);">Java基础</a>
-							<a href="javascript:classifyList(2);">web开发</a>
-							<a href="javascript:classifyList(3);">开发工具</a>
-							<a href="javascript:classifyList(4);">心情日记</a>
-							<a href="javascript:classifyList(5);">SpringBoot</a>
-							<a href="javascript:classifyList(6);">Dubbo</a>
-							<a href="javascript:classifyList(7);">Redis</a>
-							<a href="javascript:classifyList(8);">Maven</a>
-							<a href="javascript:classifyList(9);">Centos</a>
-							<a href="javascript:classifyList(10);">Tomcat</a>
-							<a href="javascript:classifyList(11);">技术交流</a>
-							<div class="clear"></div>
 						</div>
 
 						<div class="category-toggle"><i class="fa fa-chevron-left"></i></div>

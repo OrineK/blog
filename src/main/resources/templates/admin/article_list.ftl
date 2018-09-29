@@ -44,7 +44,7 @@
                 templet:function (row) {
                     return new Date(row.createTime).Format("yyyy-MM-dd hh:mm:ss");
                 }},
-                {fixed: 'right', title: '操作', align:'center', toolbar: '#barDemo'}
+                {fixed: 'right', width: 160, rowspan:"3", title: '操作', align:'center', toolbar: '#barDemo'}
             ]]
         });
 

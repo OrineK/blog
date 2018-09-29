@@ -1,70 +1,22 @@
-﻿var data = [{
-	"commentId": 11,
-	"article": null,
-	"user": {
-		"userId": 11,
-		"nickname": "清风",
-		"headPortrait": "http://qzapp.qlogo.cn/qzapp/101477629/B4901BFB60F8DEE83F01692F2544E612/100",
-		"sex": "男",
-		"registrationDate": "2018-08-01 15:19:26",
-		"latelyLoginTime": "2018-08-01 15:19:26",
-		"commentNum": 1
-	},
-	"content": "<p>网站开源吗</p><p><br></p>",
-	"commentDate": "2018-08-01 15:19:41",
-	"site": "河北省保定市  铁通",
-	"reply":[{
-			"replyId": 2,
-			"comment": {
-				"commentId": 11,
-				"article": null,
-				"user": {
-					"userId": 11,
-					"nickname": "清风",
-					"headPortrait": "http://qzapp.qlogo.cn/qzapp/101477629/B4901BFB60F8DEE83F01692F2544E612/100",
-					"sex": "男",
-					"registrationDate": "2018-08-01 15:19:26",
-					"latelyLoginTime": "2018-08-01 15:19:26",
-					"commentNum": 1
-				},
-				"content": "<p>网站开源吗</p><p><br></p>",
-				"commentDate": "2018-08-01 15:19:41",
-				"site": "河北省保定市  铁通"
-			},
-			"user": {
-				"userId": 1,
-				"nickname": "Single",
-				"headPortrait": "http://qzapp.qlogo.cn/qzapp/101477629/2F1EDDE252859E5FF645F959893C6863/100",
-				"sex": "男",
-				"registrationDate": "2018-07-26 21:24:49",
-				"latelyLoginTime": "2018-08-09 10:25:36",
-				"commentNum": 1
-			},
-			"content": "最近有点忙，后期会开源到GitHub上的。",
-			"replyDate": "2018-08-01 22:10:28",
-			"site": "湖南省湘潭市  移动"
-		}]
-},  {
-	"commentId": 2,
-	"article": null,
-	"user": {
-		"userId": 2,
-		"nickname": "Mr.Long",
-		"headPortrait": "http://qzapp.qlogo.cn/qzapp/101477629/B5D5212D0429E4491D932EEEF814FE99/100",
-		"sex": "男",
-		"registrationDate": "2018-07-26 21:30:24",
-		"latelyLoginTime": "2018-08-01 22:16:42",
-		"commentNum": 4
-	},
-	"content": "试试<br>",
-	"commentDate": "2018-07-26 21:30:52",
-	"site": "湖南省湘潭市  移动",
-	"reply":[]
-}];
-
-
-layui.use('flow', function(){
+﻿layui.use(['flow', 'jquery'], function(){
     var flow = layui.flow;
+    var $ = layui.jquery;
+
+    if ($("#editorType").val() == "MdEditor") {
+        var MdEditor;
+        $(function() {
+            MdEditor = editormd.markdownToHTML("articleContent", {//注意：这里是上面DIV的id
+                htmlDecode : "style,script,iframe",
+                emoji : true,
+                taskList : true,
+                tex : true, // 默认不解析
+                flowChart : true, // 默认不解析
+                sequenceDiagram : true, // 默认不解析
+                codeFold : true
+            });
+        });
+    }
+    
     //评论显示
     flow.load({
         elem: '#commentList' //流加载容器

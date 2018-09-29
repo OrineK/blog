@@ -14,6 +14,11 @@ body {
     clear: both;
 }
 
+.cover-img{
+    width: 100%;
+    height: 100%;
+}
+
 .blog-body {
     margin-top: 75px;
 }
@@ -37,7 +42,7 @@ body {
     }
 
         .blog-main > .home-tips > i {
-            color: #009688;
+            color: #1E9FFF;
             font-size: 15px;
         }
 

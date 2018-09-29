@@ -3,6 +3,7 @@ package com.cn.jp.orine.blog.controller;
 
 import com.alibaba.druid.support.json.JSONUtils;
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.cn.jp.orine.blog.Exception.BusinessException;
 import com.cn.jp.orine.blog.constant.ResultMsg;
 import com.cn.jp.orine.blog.utils.*;
@@ -84,6 +85,24 @@ public class StaticController {
 		map.put("data",map2);
 		String result = JSONUtils.toJSONString(map);
 		return result;
+	}
+
+	/**
+	 * MdEditor 上传图片
+	 */
+	@RequestMapping(value = "/md/upload", method = RequestMethod.POST)
+	public JSON mdUpload(@RequestParam(value = "editormd-image-file", required = true) MultipartFile file,
+						 HttpServletResponse response) throws IOException {
+		if (file.isEmpty()) {
+			throw new BusinessException("未检测到图片内容");
+		}
+		String dirname = "/articleImg";
+		String resPath = uploadPic(file, dirname);
+		JSONObject json = new JSONObject();
+		json.put("url", resPath);
+		json.put("success", 1);
+		json.put("message", "upload success!");
+		return json;
 	}
 
 

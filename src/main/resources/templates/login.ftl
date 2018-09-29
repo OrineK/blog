@@ -14,7 +14,7 @@
 
 
 <div id="logo">
-    <h1><i> JP Orine Blog Management</i></h1>
+    <h1><i> 杂食程序猿博客管理</i></h1>
 </div>
 <section class="stark-login">
     <form class="layui-form">

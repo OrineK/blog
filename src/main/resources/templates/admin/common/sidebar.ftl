@@ -9,7 +9,7 @@
                     <cite>文章管理</cite>
                     <span class="layui-nav-more"></span></a>
                 <dl class="layui-nav-child">
-                    <dd class="<#if sidebar == 'article_add'>layui-this</#if>"><a href="/admin/addArticle">新增文章</a></dd>
+                    <dd class="<#if sidebar == 'article_add'>layui-this</#if>"><a href="/admin/addArticle/LayEditor">新增文章</a></dd>
                     <dd class="<#if sidebar == 'article_list'>layui-this</#if>"><a href="/admin/articleList">文章列表</a></dd>
                 </dl>
             </li>
