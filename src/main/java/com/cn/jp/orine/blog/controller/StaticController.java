@@ -38,13 +38,13 @@ public class StaticController {
 	 */
 	private static final double PICSIZE = 1024.0;
 	// 图片路径
-//	private String picUrl = "/data/blog/pic/";
+	private String picUrl = "/data/blog/pic/";
 	// 图片返回路径
-//	private String resPicUrl = "/data/pic/";
+	private String resPicUrl = "/data/pic/";
 
 	//本地测试
-	private String picUrl = "D://workspace//upload";
-	private String resPicUrl = "/upload";
+//	private String picUrl = "D://workspace//upload";
+//	private String resPicUrl = "/upload";
 
 	private static final String UPLOAD_PATH = "/upload/img/";
 
