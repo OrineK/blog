@@ -4,7 +4,7 @@ layui.use(['element', 'layer', 'util', 'form'], function () {
     var layer = layui.layer;
     //分享工具
     layui.util.fixbar({
-        bar1: '&#xe641;',
+        // bar1: '&#xe641;',
         click: function (type) {
             if (type === 'bar1') {
                 var sear = new RegExp('layui-hide');
