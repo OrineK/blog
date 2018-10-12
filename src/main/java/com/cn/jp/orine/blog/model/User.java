@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -31,6 +32,23 @@ public class User implements Serializable {
         inverseJoinColumns = {@JoinColumn(name = "roleId")})
     private List<Role> roles;
 
+    private String email;
+
+    private int active = 0;
+
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
+
+    private String loginIpAddress;
+
+    private String createIpAddress = "0.0.0.1";
+
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createTime = new Date();
+
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date loginTime;
+
     /**
      * 密码盐.
      *
@@ -38,5 +56,20 @@ public class User implements Serializable {
      */
     public String getCredentialsSalt() {
         return this.username + this.salt;
+    }
+
+    public enum Gender {
+        MALE("女"),
+        FAMALE("男");
+
+        private String text;
+
+        Gender(String text) {
+            this.text = text;
+        }
+
+        public String getText() {
+            return text;
+        }
     }
 }

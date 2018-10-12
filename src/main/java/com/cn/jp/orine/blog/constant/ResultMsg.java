@@ -32,6 +32,11 @@ public class ResultMsg {
     public static final String INIT_ADMIN_ERROR = "管理员信息初始化错误";
 
     /**
+     * 权限不足
+     */
+    public static final String INSUFFICIENT_PERMISSIONS = "权限不足";
+
+    /**
      * 参数错误
      */
     public static final String PARAMETER_ERROR = "参数错误";

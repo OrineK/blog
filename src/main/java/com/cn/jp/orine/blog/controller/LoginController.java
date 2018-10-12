@@ -5,6 +5,7 @@ import com.cn.jp.orine.blog.Exception.BusinessException;
 import com.cn.jp.orine.blog.constant.ResultMsg;
 import com.cn.jp.orine.blog.constant.SysContant;
 import com.cn.jp.orine.blog.model.User;
+import com.cn.jp.orine.blog.service.UserService;
 import com.cn.jp.orine.blog.utils.JsonUtil;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
@@ -16,21 +17,32 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping(value = "/auth")
 public class LoginController {
 
+    @Resource
+    private UserService userService;
+
     @ResponseBody
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public JSON submitLogin(String username, String password, HttpSession session) {
+    public JSON submitLogin(String username, String password, HttpSession session,
+                            HttpServletRequest request) {
         try {
             UsernamePasswordToken token = new UsernamePasswordToken(username, password);
             Subject subject = SecurityUtils.getSubject();
             subject.login(token);
             User user = (User) subject.getPrincipal();
+            if (!subject.hasRole("admin")) {
+                throw new BusinessException(ResultMsg.INSUFFICIENT_PERMISSIONS);
+            }
             session.setAttribute(SysContant.USER_SESSION, user);
+            user.setLoginIpAddress(request.getRemoteAddr());
+            userService.login(user);
         } catch (DisabledAccountException e) {
             throw new BusinessException(ResultMsg.USER_IS_BANNED);
         } catch (AuthenticationException e) {
