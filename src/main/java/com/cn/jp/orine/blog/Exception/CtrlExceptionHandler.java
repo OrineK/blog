@@ -28,5 +28,4 @@ public class CtrlExceptionHandler {
         logger.debug(e.getMessage());
         return "403";
     }
-
 }

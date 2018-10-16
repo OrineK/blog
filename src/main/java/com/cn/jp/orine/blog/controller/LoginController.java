@@ -6,6 +6,7 @@ import com.cn.jp.orine.blog.constant.ResultMsg;
 import com.cn.jp.orine.blog.constant.SysContant;
 import com.cn.jp.orine.blog.model.User;
 import com.cn.jp.orine.blog.service.UserService;
+import com.cn.jp.orine.blog.utils.IpAddrUtil;
 import com.cn.jp.orine.blog.utils.JsonUtil;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
@@ -36,12 +37,13 @@ public class LoginController {
             UsernamePasswordToken token = new UsernamePasswordToken(username, password);
             Subject subject = SecurityUtils.getSubject();
             subject.login(token);
+            String ipAddress = IpAddrUtil.getIpAddress(request);
             User user = (User) subject.getPrincipal();
             if (!subject.hasRole("admin")) {
                 throw new BusinessException(ResultMsg.INSUFFICIENT_PERMISSIONS);
             }
             session.setAttribute(SysContant.USER_SESSION, user);
-            user.setLoginIpAddress(request.getRemoteAddr());
+            user.setLoginIpAddress(ipAddress);
             userService.login(user);
         } catch (DisabledAccountException e) {
             throw new BusinessException(ResultMsg.USER_IS_BANNED);

@@ -59,6 +59,5 @@ public class GlobeExcetion {
         responseJson.put("code", ResultCode.NOT_FOUND);
         return responseJson;
     }
-    
 }
 
