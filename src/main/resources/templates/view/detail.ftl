@@ -34,6 +34,7 @@
 
 		<div class="blog-body">
             <input type="hidden" id="editorType" value="${article.editorType}">
+			<input type="hidden" id="articleId" value="${article.id}">
 			<div class="blog-container">
 				<div class="blog-main">
 					<blockquote class="layui-elem-quote sitemap layui-breadcrumb shadow" style="visibility: visible;">
@@ -60,6 +61,21 @@
 									</#if>
 								</div>
 							</div>
+
+							<#if before?? || after??>
+							<div class="blog-module shadow">
+								<#if before??>
+									<div style="padding: 5px;">
+                                        上一篇：<a href="/article/detail/${before.id}">${before.title}</a>
+									</div>
+								</#if>
+								<#if after?? >
+									<div style="padding: 5px;">
+                                        下一篇：<a href="/article/detail/${after.id}">${after.title}</a>
+									</div>
+								</#if>
+							</div>
+							</#if>
 
 							<div class="blog-module shadow" style="box-shadow: 0 1px 8px #a6a6a6;">
 								<fieldset class="layui-elem-field layui-field-title" style="margin-bottom:0">

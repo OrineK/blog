@@ -28,6 +28,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -132,6 +133,35 @@ public class ArticleService {
         return articleDao.findAll(this.getWhereClause(req), pageable);
     }
 
+    public void addClickNum(Article article) {
+        article.setUpdateTime(new Date());
+        article.setClickNum(article.getClickNum() + 1);
+        articleDao.save(article);
+    }
+
+    public void addStartNum(Article article) {
+        article.setUpdateTime(new Date());
+        article.setStartNum(article.getStartNum() + 1);
+        articleDao.save(article);
+    }
+
+    /**
+     * 查询id的前一条信息
+     * @param id
+     * @return
+     */
+    public Article findBeforeById(Long id) {
+        return articleDao.findByIdIsBefore(id);
+    }
+
+    /**
+     * 查询id的后一条信息
+     * @param id
+     * @return
+     */
+    public Article findAfterById(Long id) {
+        return articleDao.findByIdIsAfter(id);
+    }
 
     /**
      * 私有方法 -用于查询

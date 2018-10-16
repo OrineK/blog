@@ -87,8 +87,14 @@
 
 $(document).ready(function() {
     $(".fa-file-text").parent().parent().addClass("layui-this");
-});
 
+    setTimeout(function () {
+        var id = $("#articleId").val();
+        $.get("/article/click/"+id, function(data) {
+            return
+        })
+    }, 5000)
+});
 
 function classifyList(id) {
 	layer.msg('功能要自己写哦！');

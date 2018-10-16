@@ -41,10 +41,25 @@ public class ArticleController {
         ModelAndView modelAndView = new ModelAndView();
         Article article = articleService.getAticleById(id);
         List<Category> categories = categoryService.list();
+        modelAndView.addObject("before", articleService.findBeforeById(id));
+        modelAndView.addObject("after", articleService.findAfterById(id));
         modelAndView.addObject("article", article);
         modelAndView.addObject("categories", categories);
         modelAndView.setViewName("view/detail");
         return modelAndView;
     }
 
+    @RequestMapping(value = "/click/{id}", method = RequestMethod.GET)
+    public JSON click(@PathVariable("id") Long id) {
+        Article article = articleService.getAticleById(id);
+        articleService.addClickNum(article);
+        return JsonUtil.newJson().toJson();
+    }
+
+    @RequestMapping(value = "/start/{id}", method = RequestMethod.GET)
+    public JSON start(@PathVariable("id") Long id) {
+        Article article = articleService.getAticleById(id);
+        articleService.addStartNum(article);
+        return JsonUtil.newJson().toJson();
+    }
 }
