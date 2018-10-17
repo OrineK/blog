@@ -1,3 +1,21 @@
+var params = '';
+
+$(function(){
+    $(".fa-file-text").parent().parent().addClass("layui-this");
+    var keywords=$("#keywords").val();
+    $("#keywords").keydown(function (event) {
+        if (event.keyCode == 13) {
+            var keyword=$("#keywords").val();
+            if(keyword==null || keyword==""){
+                layer.msg('请输入要搜索的关键字');
+                return false;
+            }
+            search();
+        }
+    });
+
+});
+
 layui.use(['form', 'jquery', 'flow'], function(){
     var form = layui.form;
     var $ = layui.jquery;
@@ -20,7 +38,7 @@ layui.use(['form', 'jquery', 'flow'], function(){
         ,done: function(page, next){ //到达临界点（默认滚动触发），触发下一页
             var lis = [];
             //以jQuery的Ajax请求为例，请求下一页数据（注意：page是从2开始返回）
-            $.get('/article/list?page='+page, function(res){
+            $.get('/article/list?page='+page + params, function(res){
                 //假设你的列表返回在data集合中
                 layui.each(res.data.content, function(index, item){
                     lis.push(article_item(item));
@@ -29,23 +47,6 @@ layui.use(['form', 'jquery', 'flow'], function(){
                 //pages为Ajax返回的总页数，只有当前页小于总页数的情况下，才会继续出现加载更多
                 next(lis.join(''), page < res.data.totalPages);
             });
-        }
-    });
-});
-
-
-
-$(function(){
-    $(".fa-file-text").parent().parent().addClass("layui-this");
-    var keywords=$("#keywords").val();
-    $("#keywords").keydown(function (event) {
-        if (event.keyCode == 13) {
-            var keyword=$("#keywords").val();
-            if(keyword==null || keyword==""){
-                layer.msg('请输入要搜索的关键字');
-                return false;
-            }
-            search();
         }
     });
 });

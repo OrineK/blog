@@ -151,7 +151,7 @@ public class ArticleService {
      * @return
      */
     public Article findBeforeById(Long id) {
-        return articleDao.findByIdIsBefore(id);
+        return articleDao.findFirstByIdBeforeOrderByIdDesc(id);
     }
 
     /**
@@ -160,7 +160,7 @@ public class ArticleService {
      * @return
      */
     public Article findAfterById(Long id) {
-        return articleDao.findByIdIsAfter(id);
+        return articleDao.findFirstByIdAfterOrderByIdAsc(id);
     }
 
     /**

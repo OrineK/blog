@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 public interface ArticleDao extends JpaRepository<Article, Long>, JpaSpecificationExecutor<Article> {
 
-    Article findByIdIsBefore(Long id);
+    Article findFirstByIdBeforeOrderByIdDesc(Long id);
 
-    Article findByIdIsAfter(Long id);
+    Article findFirstByIdAfterOrderByIdAsc(Long id);
 }
